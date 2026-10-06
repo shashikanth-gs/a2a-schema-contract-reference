@@ -4,7 +4,7 @@ import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { discoverContractClient } from '@shashikanth-gs/a2a-schema-contract/client';
+import { discoverContractClient } from 'a2a-schema-contract/client';
 import { launchAgent, withAgent, liveChildren } from '../scripts/harness.mjs';
 
 test('success and application failure close child and listener', { timeout: 15000 }, async () => {

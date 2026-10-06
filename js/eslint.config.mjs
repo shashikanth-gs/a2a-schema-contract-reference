@@ -22,6 +22,8 @@ export default tseslint.config(
         AbortController: 'readonly',
         AbortSignal: 'readonly',
         fetch: 'readonly',
+        Response: 'readonly',
+        structuredClone: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
       },

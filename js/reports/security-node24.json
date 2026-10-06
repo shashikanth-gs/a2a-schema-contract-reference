@@ -1,0 +1,341 @@
+{
+  "result": "PASS",
+  "profile": "Node first release candidate",
+  "node": "v24.21.0",
+  "platform": "darwin/arm64",
+  "artifact": {
+    "packageName": "a2a-schema-contract",
+    "version": "0.1.0-rc.0",
+    "sha256": "0f29b101df8af091fc2337cdc5eda6f0e7a234cdd18ac9330bf19d65f270c60e",
+    "sdkCommit": "7481b002f55a0961ea4ee21e36da446f2a3b9ea8",
+    "contractCommit": "a5c007510faa3fce85190f2e76e402faf0e897ad"
+  },
+  "scenarios": [
+    {
+      "id": "raw-input-negative",
+      "requirements": [
+        "D09-01",
+        "D09-03"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "raw-input-coercion",
+      "requirements": [
+        "D09-01",
+        "D09-03"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "raw-input-missing",
+      "requirements": [
+        "D09-01",
+        "D09-03"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "raw-input-additional",
+      "requirements": [
+        "D09-01",
+        "D09-03"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "raw-input-root-null",
+      "requirements": [
+        "D09-01",
+        "D09-03"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "missing-activation",
+      "requirements": [
+        "D07-01",
+        "D07-02",
+        "D07-06"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "unknown-contract",
+      "requirements": [
+        "D07-01",
+        "D07-02",
+        "D07-06"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "unknown-input",
+      "requirements": [
+        "D07-01",
+        "D07-02",
+        "D07-06"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "no-output-intersection",
+      "requirements": [
+        "D07-01",
+        "D07-02",
+        "D07-06"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "wrong-metadata-scope",
+      "requirements": [
+        "D07-01",
+        "D07-02",
+        "D07-06"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "duplicate-primary",
+      "requirements": [
+        "D07-01",
+        "D07-02",
+        "D07-06"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "domain-contract-version-mismatch",
+      "requirements": [
+        "D07-01",
+        "D07-02"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "unsupported-a2a-protocol-version",
+      "requirements": [
+        "D07-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "deep-payload-budget",
+      "requirements": [
+        "D09-01",
+        "D14-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "oversized-http-body",
+      "requirements": [
+        "D14-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "malformed-http-body",
+      "requirements": [
+        "D14-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "output-invalid",
+      "requirements": [
+        "D10-01",
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "output-throw",
+      "requirements": [
+        "D10-01",
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "output-bad-echo",
+      "requirements": [
+        "D10-01",
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "output-late-event",
+      "requirements": [
+        "D10-01",
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "output-stream-invalid",
+      "requirements": [
+        "D10-01",
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "concurrent-request-isolation",
+      "requirements": [
+        "D09-01",
+        "D10-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "explicit-cancel-discards-late-output",
+      "requirements": [
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "disconnect-cleanup",
+      "requirements": [
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "diagnostic-redaction",
+      "requirements": [
+        "D14-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "peer-schema",
+      "requirements": [
+        "D11-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "peer-missing-echo",
+      "requirements": [
+        "D11-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "peer-wrong-echo",
+      "requirements": [
+        "D11-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "peer-missing-primary",
+      "requirements": [
+        "D11-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "peer-duplicate-primary",
+      "requirements": [
+        "D11-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "peer-root-null",
+      "requirements": [
+        "D11-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "execution-deadline",
+      "requirements": [
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "bounded-validation-and-physical-worker-cleanup",
+      "requirements": [
+        "D09-02",
+        "D14-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "optional-extension-baseline",
+      "requirements": [
+        "D07-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "external-agent-discovery-round-trip",
+      "requirements": [
+        "D04-02",
+        "D08-03",
+        "D09-01",
+        "D11-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "external-pinned-offline-validation-and-cache",
+      "requirements": [
+        "D08-03",
+        "D13-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "external-prohibited-address",
+      "requirements": [
+        "D13-01",
+        "D13-02"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "external-redirect-private",
+      "requirements": [
+        "D13-01",
+        "D13-02"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "external-integrity-mismatch",
+      "requirements": [
+        "D13-01",
+        "D13-02"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "external-unavailable",
+      "requirements": [
+        "D13-01",
+        "D13-02"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "external-response-budget",
+      "requirements": [
+        "D13-01",
+        "D13-02"
+      ],
+      "outcome": "PASS"
+    }
+  ],
+  "cleanup": {
+    "children": 0,
+    "workers": "Every validation operation awaits worker termination; installed timeout scenario asserts active=0."
+  }
+}

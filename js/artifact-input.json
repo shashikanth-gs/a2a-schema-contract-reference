@@ -1,7 +1,7 @@
 {
-  "packageName": "@shashikanth-gs/a2a-schema-contract",
-  "version": "0.1.0-dev.0",
-  "sha256": "3476778550e9b570bb60d7529faa6c7a63c4fee9d67f0911e879809cdd8f1bd4",
-  "sdkCommit": "eb0dda05c0bf77d5250184006bb499691f454d3c",
+  "packageName": "a2a-schema-contract",
+  "version": "0.1.0-rc.0",
+  "sha256": "0f29b101df8af091fc2337cdc5eda6f0e7a234cdd18ac9330bf19d65f270c60e",
+  "sdkCommit": "7481b002f55a0961ea4ee21e36da446f2a3b9ea8",
   "contractCommit": "a5c007510faa3fce85190f2e76e402faf0e897ad"
 }

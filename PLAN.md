@@ -15,8 +15,8 @@ This table owns REF-* statuses. SDK-* dependencies are tracked in the SDK reposi
 |---|---|---|---|---|
 | REF-001 | Reproducible Node package-consumer harness | DONE | Codex | SDK-002, SDK-004 |
 | REF-002 | Complete deterministic Node reference scenarios | DONE | Codex | REF-001, SDK-005 |
-| REF-003 | Node protocol, failure and security demonstrations | PLANNED | Unassigned | REF-002, SDK-006, SDK-007 |
-| REF-004 | Node developer/operations guide and validation report | PLANNED | Unassigned | REF-003 |
+| REF-003 | Node protocol, failure and security demonstrations | IN_PROGRESS | Codex | REF-002, SDK-006, SDK-007 |
+| REF-004 | Node developer/operations guide and validation report | IN_PROGRESS | Codex | REF-003 |
 | REF-005 | Complete Python reference applications | PLANNED | Unassigned | REF-004, SDK-010, SDK-011 |
 | REF-006 | Four-pairing interoperability and parity suite | PLANNED | Unassigned | REF-005, SDK-007, SDK-011 |
 | REF-007 | Schema-driven generation demonstration | DEFERRED | Unassigned | REF-002, SDK-005 |
@@ -80,7 +80,7 @@ Acceptance criteria:
 - Validate cancellation, timeout, shutdown, concurrent-request separation, secret/error redaction and no leaked child processes/sockets.
 - Produce structured, sanitized scenario reports and explain how to diagnose each failure. SDK fixes belong in the SDK repository; reference code must not work around a broken library.
 
-Evidence: Not started.
+Evidence: Started 2026-10-06 by Codex on `codex/m3-node-release-candidate`; operational isolation and independent installed-artifact security validation in progress. Completion gates remain open.
 
 ## REF-004: Node developer/operations guide and validation report
 
@@ -188,3 +188,6 @@ The repository front page, description, discovery topics and contributor/securit
 guides distinguish the implemented Node preview from planned Python and release
 work. Original task reports retain their validation-time context. Source hosting
 does not publish an npm/PyPI package or close the remaining release gates.
+
+
+| 2026-10-06 | REF-003/004 candidate work | Independent protocol/security scenarios, raw direct requests with binding headers, output races, dishonest peers, resolver fixtures, owned worker cleanup, operations guide and pinned source-to-artifact portability workflow implemented. Final fresh/hosted consumer gates remain open. | docs/node-operations.md; js/src/client/security.mjs; node-candidate.yml |

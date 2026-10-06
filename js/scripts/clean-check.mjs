@@ -21,8 +21,10 @@ try {
     recursive: true,
     filter: (path) =>
       !path
-        .split('/')
-        .some((part) => ['.git', 'node_modules', 'dist', 'reports', 'artifacts'].includes(part)),
+        .split(/[\\/]/u)
+        .some((part) =>
+          ['.git', '.sdk-source', 'node_modules', 'dist', 'reports', 'artifacts'].includes(part),
+        ),
   });
   const copiedArtifact = join(temp, 'sdk.tgz');
   await writeFile(copiedArtifact, artifact);
@@ -41,6 +43,10 @@ try {
   const reports = fileURLToPath(new URL('../reports/', import.meta.url));
   await mkdir(reports, { recursive: true });
   const major = process.versions.node.split('.')[0];
+  await cp(
+    join(js, 'reports', `security-node${major}.json`),
+    join(reports, `security-node${major}.json`),
+  );
   await cp(
     join(js, 'reports', `scenarios-node${major}.json`),
     join(reports, `scenarios-node${major}.json`),
@@ -62,6 +68,7 @@ try {
           'compiled-typescript',
           'plain-javascript',
           '37-inline-scenarios',
+          'independent-protocol-security-and-HTTPS-scenarios',
           'lifecycle-cleanup',
           'documented-runner',
           'single-scenario-command',

@@ -36,9 +36,9 @@ test('interrupting command owner terminates the subprocess group', { timeout: 50
     [
       '--input-type=module',
       '-e',
-      `import {command} from ${JSON.stringify(moduleUrl)}; try { await command(['-e', ${JSON.stringify(childCode)}]); } catch { process.exitCode = 143; }`,
+      `import {command} from ${JSON.stringify(moduleUrl)}; const controller = new AbortController(); process.on('message', () => controller.abort()); try { await command(['-e', ${JSON.stringify(childCode)}], {signal:controller.signal}); } catch { process.exitCode = 143; } finally { process.disconnect?.(); }`,
     ],
-    { stdio: ['ignore', 'pipe', 'ignore'] },
+    { stdio: ['ignore', 'pipe', 'ignore', 'ipc'] },
   );
   const exited = new Promise((resolve, reject) => {
     owner.once('exit', resolve);
@@ -55,7 +55,8 @@ test('interrupting command owner terminates the subprocess group', { timeout: 50
       owner.once('exit', () => reject(new Error('Owner exited before child readiness')));
       owner.once('error', reject);
     });
-    owner.kill('SIGTERM');
+    if (process.platform === 'win32') owner.send('interrupt');
+    else owner.kill('SIGTERM');
     assert.equal(await exited, 143);
     assert.throws(() => process.kill(pid, 0), { code: 'ESRCH' });
   } finally {

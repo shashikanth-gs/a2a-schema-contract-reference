@@ -3,22 +3,20 @@ import { test } from 'node:test';
 import { spawn } from 'node:child_process';
 import { mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getSchemaResource } from '@shashikanth-gs/a2a-schema-contract/core';
+import { getSchemaResource } from 'a2a-schema-contract/core';
 
 test('installed public imports and packaged resource resolve inside this consumer', async () => {
-  const root = await realpath(
-    new URL('../node_modules/@shashikanth-gs/a2a-schema-contract/', import.meta.url),
-  );
+  const root = await realpath(new URL('../node_modules/a2a-schema-contract/', import.meta.url));
   for (const path of ['core', 'client', 'server', 'adapters/a2a-js']) {
     const installed = await realpath(
-      fileURLToPath(import.meta.resolve('@shashikanth-gs/a2a-schema-contract/' + path)),
+      fileURLToPath(import.meta.resolve('a2a-schema-contract/' + path)),
     );
-    assert.ok(installed.startsWith(root + '/'));
+    assert.ok(installed.startsWith(root + sep));
   }
   const resource = getSchemaResource('catalog');
-  assert.ok((await realpath(resource)).startsWith(root + '/'));
+  assert.ok((await realpath(resource)).startsWith(root + sep));
   assert.equal(JSON.parse(await readFile(resource, 'utf8')).type, 'object');
 });
 test(
@@ -27,10 +25,7 @@ test(
   async () => {
     const dir = await mkdtemp(join(tmpdir(), 'reference-bad-artifact-'));
     const lockUrl = new URL('../package-lock.json', import.meta.url);
-    const sdkUrl = new URL(
-      '../node_modules/@shashikanth-gs/a2a-schema-contract/package.json',
-      import.meta.url,
-    );
+    const sdkUrl = new URL('../node_modules/a2a-schema-contract/package.json', import.meta.url);
     const beforeLock = await readFile(lockUrl, 'utf8');
     const beforeSDK = await readFile(sdkUrl, 'utf8');
     try {

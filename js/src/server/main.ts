@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { once } from 'node:events';
-import express from 'express';
+import express, { type ErrorRequestHandler } from 'express';
 import {
   AgentCard,
   Artifact,
@@ -11,19 +12,41 @@ import {
   TaskStatusUpdateEvent,
 } from '@a2a-js/sdk';
 import { AgentEvent, InMemoryTaskStore, ServerCallContext } from '@a2a-js/sdk/server';
+import { createContractResolver } from 'a2a-schema-contract/resolver';
+import type { DiagnosticEvent } from 'a2a-schema-contract/operations';
 import { agentCardHandler, jsonRpcHandler, UserBuilder } from '@a2a-js/sdk/server/express';
 import { toJsonRpcError } from '@a2a-js/sdk/errors';
-import { EXTENSION_URI, type JsonValue } from '@shashikanth-gs/a2a-schema-contract/core';
+import { EXTENSION_URI, type JsonValue } from 'a2a-schema-contract/core';
 import {
   createContractServer,
   outputArtifact,
   outputPart,
   type ExecutionContract,
-} from '@shashikanth-gs/a2a-schema-contract/server';
+} from 'a2a-schema-contract/server';
 
-const catalog: unknown = JSON.parse(
-  await readFile(new URL('../../../fixtures/catalog.json', import.meta.url), 'utf8'),
-);
+const diagnostics: DiagnosticEvent[] = [];
+const evidenceEnabled = process.env.REFERENCE_EVIDENCE === '1';
+const source: unknown =
+  evidenceEnabled && process.env.REFERENCE_CATALOG_JSON
+    ? JSON.parse(process.env.REFERENCE_CATALOG_JSON)
+    : JSON.parse(
+        await readFile(new URL('../../../fixtures/catalog.json', import.meta.url), 'utf8'),
+      );
+const fixtureOrigin = evidenceEnabled ? process.env.REFERENCE_RESOLVER_ORIGIN : undefined;
+if (
+  fixtureOrigin &&
+  (new URL(fixtureOrigin).protocol !== 'https:' ||
+    new URL(fixtureOrigin).hostname !== 'catalog.test')
+)
+  throw new Error('Invalid test resolver origin');
+const catalog = fixtureOrigin
+  ? await createContractResolver({
+      allowedOrigins: [fixtureOrigin],
+      ca: await readFile(new URL('../../../fixtures/tls/cert.pem', import.meta.url)),
+      lookup: () => Promise.resolve([{ address: '127.0.0.1', family: 4 }]),
+      allowAddress: (address, hostname) => address === '127.0.0.1' && hostname === 'catalog.test',
+    }).resolveCatalog(source, { origin: 'local' })
+  : source;
 const evidence: {
   contractId: string;
   inputPresent: boolean;
@@ -73,12 +96,35 @@ const adapter = createContractServer({
     skills: [],
   }),
   catalog,
-  required: true,
+  required: process.env.REFERENCE_REQUIRED !== '0',
+  deadlineMs: Number(process.env.REFERENCE_DEADLINE_MS ?? '30000'),
+  validation: {
+    diagnostics: (event) => {
+      if (evidenceEnabled) {
+        if (diagnostics.length === 128) diagnostics.shift();
+        diagnostics.push(event);
+      }
+    },
+  },
   taskStore: new InMemoryTaskStore(),
   signal: (context) => context.state.get('disconnect') as AbortSignal | undefined,
   executor: {
-    execute(context, bus) {
+    async execute(context, bus) {
+      if (!context.context.activatedExtensions?.includes(EXTENSION_URI)) {
+        bus.publish(
+          AgentEvent.message(
+            Message.fromJSON({
+              messageId: 'baseline',
+              contextId: context.contextId,
+              role: 'ROLE_AGENT',
+              parts: [{ text: 'Baseline request complete.' }],
+            }),
+          ),
+        );
+        return;
+      }
       const execution = adapter.execution(context);
+      if (evidence.length === 4096) evidence.shift();
       evidence.push({
         contractId: execution.invocation.contractId,
         inputPresent: execution.input.present,
@@ -87,6 +133,98 @@ const adapter = createContractServer({
       });
       execution.signal.throwIfAborted();
       const settings = context.request.metadata ?? {};
+      if (evidenceEnabled && settings.fault === 'throw') throw new Error('secret-business-value');
+      if (evidenceEnabled && settings.fault === 'wait') {
+        bus.publish(
+          AgentEvent.task(
+            Task.fromJSON({
+              id: context.taskId,
+              contextId: context.contextId,
+              status: { state: 'TASK_STATE_WORKING' },
+            }),
+          ),
+        );
+        await new Promise<void>((resolve) => {
+          if (execution.signal.aborted) resolve();
+          else execution.signal.addEventListener('abort', () => resolve(), { once: true });
+        });
+        return;
+      }
+      if (evidenceEnabled && typeof settings.fault === 'string') {
+        const raw = {
+          artifactId: 'result',
+          parts: [
+            {
+              data: { total: 6, label: null as JsonValue },
+              mediaType: 'application/json',
+              metadata: {
+                [EXTENSION_URI]: {
+                  role: 'primary',
+                  contractId: execution.invocation.contractId,
+                  direction: 'output',
+                  representationId: execution.output?.representation.id,
+                },
+              },
+            },
+          ],
+        };
+        if (settings.fault === 'invalid' || settings.fault === 'stream-invalid') {
+          raw.parts[0]!.data = { total: -1, label: 'secret-payload' };
+        }
+        const result = Task.fromJSON({
+          id: context.taskId,
+          contextId: context.contextId,
+          status: { state: 'TASK_STATE_COMPLETED' },
+          artifacts: [raw],
+        });
+        if (settings.fault === 'bad-echo')
+          result.metadata = {
+            [EXTENSION_URI]: { contractId: 'urn:wrong:1', outputRepresentationId: 'json' },
+          };
+        if (settings.fault === 'stream-invalid') {
+          bus.publish(
+            AgentEvent.task(
+              Task.fromJSON({
+                id: context.taskId,
+                contextId: context.contextId,
+                status: { state: 'TASK_STATE_WORKING' },
+              }),
+            ),
+          );
+          bus.publish(
+            AgentEvent.artifactUpdate(
+              TaskArtifactUpdateEvent.fromJSON({
+                taskId: context.taskId,
+                contextId: context.contextId,
+                artifact: raw,
+                lastChunk: true,
+              }),
+            ),
+          );
+          bus.publish(
+            AgentEvent.statusUpdate(
+              TaskStatusUpdateEvent.fromJSON({
+                taskId: context.taskId,
+                contextId: context.contextId,
+                status: { state: 'TASK_STATE_COMPLETED' },
+              }),
+            ),
+          );
+        } else {
+          bus.publish(AgentEvent.task(result));
+          if (settings.fault === 'late-event')
+            bus.publish(
+              AgentEvent.statusUpdate(
+                TaskStatusUpdateEvent.fromJSON({
+                  taskId: context.taskId,
+                  contextId: context.contextId,
+                  status: { state: 'TASK_STATE_COMPLETED' },
+                }),
+              ),
+            );
+        }
+        return;
+      }
       if (settings.prompt === true) {
         bus.publish(
           AgentEvent.task(
@@ -205,15 +343,40 @@ const adapter = createContractServer({
     },
   },
 });
+if (fixtureOrigin && process.env.REFERENCE_CATALOG_URI) {
+  const extension = adapter.card.capabilities!.extensions.find(
+    (extension) => extension.uri === EXTENSION_URI,
+  )!;
+  extension.params = {
+    catalog: {
+      uri: process.env.REFERENCE_CATALOG_URI,
+      mediaType: 'application/json',
+      integrity: {
+        algorithm: 'sha-256',
+        value: createHash('sha256').update(JSON.stringify(source)).digest('base64'),
+      },
+    },
+  };
+}
 const app = express();
 app.use(express.json({ limit: '256kb' }));
+const rejectBody: ErrorRequestHandler = (error: unknown, _req, res, _next) => {
+  void _next;
+  const status =
+    typeof error === 'object' && error !== null && 'status' in error && error.status === 413
+      ? 413
+      : 400;
+  res.status(status).json({ error: 'Request body rejected.' });
+};
+app.use(rejectBody);
 app.get('/health', (_req, res) => {
   res.json({ ready: true });
 });
 // Test-only, sanitized counters: no input values, credentials, or schema bodies.
-app.get('/evidence', (_req, res) => {
-  res.json({ executions: evidence.length, calls: evidence });
-});
+if (evidenceEnabled)
+  app.get('/evidence', (_req, res) => {
+    res.json({ executions: evidence.length, calls: evidence, diagnostics });
+  });
 app.use('/.well-known/agent-card.json', agentCardHandler({ agentCardProvider: adapter.handler }));
 app.use('/rpc', (req, res, next) => {
   try {
@@ -259,17 +422,25 @@ const ready = { type: 'ready', url };
 if (process.send) process.send(ready);
 else console.log(JSON.stringify(ready));
 let closing = false;
-function shutdown(): void {
+async function shutdown(): Promise<void> {
   if (closing) return;
   closing = true;
-  server.closeAllConnections();
-  server.close(() => {
-    process.disconnect?.();
-  });
+  const force = setTimeout(() => server.closeAllConnections(), 1000);
+  const drained = new Promise<void>((resolve) => server.close(() => resolve()));
+  await adapter.close();
+  await drained;
+  clearTimeout(force);
+  process.disconnect?.();
 }
-process.on('SIGTERM', shutdown);
-process.on('SIGINT', shutdown);
-process.on('message', (message: unknown) => {
-  if (message === 'shutdown') shutdown();
+process.on('SIGTERM', () => {
+  void shutdown();
 });
-process.on('disconnect', shutdown);
+process.on('SIGINT', () => {
+  void shutdown();
+});
+process.on('message', (message: unknown) => {
+  if (message === 'shutdown') void shutdown();
+});
+process.on('disconnect', () => {
+  void shutdown();
+});

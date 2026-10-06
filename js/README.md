@@ -1,6 +1,6 @@
 # Node reference applications
 
-These independent applications install `@shashikanth-gs/a2a-schema-contract@0.1.0-dev.0`
+These independent applications install `a2a-schema-contract@0.1.0-rc.0`
 from a hash-verified npm tarball. They use public imports only. No SDK checkout,
 workspace schemas, npm link, cloud account or model credentials are required.
 Node 22 >=22.23.3 or 24 >=24.21.0, npm, and ESM are supported. Local evidence is
@@ -9,7 +9,7 @@ macOS; hosted Linux CI is configured but has not run. Python remains planned.
 From `js/`, using a supported Node runtime:
 
 ```sh
-export SDK_ARTIFACT=/absolute/path/to/shashikanth-gs-a2a-schema-contract-0.1.0-dev.0.tgz
+export SDK_ARTIFACT=/absolute/path/to/a2a-schema-contract-0.1.0-rc.0.tgz
 npm run artifact:install
 npm run check
 npm run scenarios
@@ -50,7 +50,7 @@ the subprocess group on Unix. No arbitrary startup delay is used.
 To run the agent and client separately:
 
 ```sh
-REFERENCE_HOST=127.0.0.1 REFERENCE_PORT=8080 npm start
+REFERENCE_HOST=127.0.0.1 REFERENCE_EVIDENCE=1 REFERENCE_PORT=8080 npm start
 # In another terminal, from js/:
 npm run scenarios -- --url http://127.0.0.1:8080 --scenario invoice-json-discovery
 # Stop the agent with Ctrl-C.
@@ -66,3 +66,18 @@ this unauthenticated demonstration server is intended for local development.
 
 See the [flow and scenario tutorial](../docs/inline-tutorial.md),
 [validation report](../docs/inline-reference-report.md), and [task plan](../PLAN.md).
+
+## Node release candidate operation
+
+Run `npm run security` for the independent raw-request, failure, dishonest-peer,
+HTTPS policy/integrity and worker/cancellation suite. `npm run check` includes
+that suite alongside the 37 inline scenarios. See
+[the operations guide](../docs/node-operations.md) for configuration, readiness,
+graceful shutdown, credential ownership, diagnostics and troubleshooting.
+The candidate workflow rebuilds the exact `artifact-input.json` SDK revision and
+runs fresh installed consumers on Linux Node 22/24 and macOS/Windows Node 24.
+
+`REFERENCE_EVIDENCE=1` enables only test counters, sanitized diagnostic facts and
+intentional fault injection; the scenario harness sets it. Leave it disabled in
+normal service operation. The TLS certificate/key under `fixtures/tls/` is a
+public loopback test fixture. Package publishing remains disabled.
