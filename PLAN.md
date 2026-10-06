@@ -2,7 +2,7 @@
 
 Updated: 2026-10-06  
 Status: REF-001/002 complete locally; Node inline artifact-consumer evidence available
-Next task: REF-003 after SDK-006/007; workspace next task is SDK-006
+Next task: REF-003 after SDK-007; SDK-006 is complete and workspace next task is SDK-007
 Companion tracking: [workspace plan](../PLAN.md), [SDK plan](../a2a-schema-contract-sdk/PLAN.md)
 
 This repository demonstrates how real clients and agents use the reusable packages. It is an independent consumer and interoperability check, not a second implementation of SDK internals. The initial specification revision is pinned in [contract-source.json](contract-source.json).
