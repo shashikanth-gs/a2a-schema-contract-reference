@@ -3,13 +3,21 @@ import { fileURLToPath } from 'node:url';
 export const liveChildren = new Set();
 export async function launchAgent({
   signal,
+  env = {},
   readinessMs = 5000,
   script = new URL('../dist/server/main.js', import.meta.url),
 } = {}) {
   signal?.throwIfAborted();
   const child = fork(fileURLToPath(script), [], {
     stdio: ['ignore', 'ignore', 'ignore', 'ipc'],
-    env: { ...process.env, REFERENCE_HOST: '127.0.0.1', REFERENCE_PORT: '0' },
+    execArgv: [],
+    env: {
+      ...process.env,
+      REFERENCE_HOST: '127.0.0.1',
+      REFERENCE_PORT: '0',
+      REFERENCE_EVIDENCE: '1',
+      ...env,
+    },
   });
   liveChildren.add(child);
   child.once('exit', () => liveChildren.delete(child));
@@ -21,7 +29,11 @@ export async function launchAgent({
     if (closed) return exited;
     closed = true;
     if (child.exitCode !== null || child.signalCode !== null) return exited;
-    child.kill('SIGTERM');
+    if (child.connected)
+      child.send('shutdown', (error) => {
+        if (error) child.kill('SIGTERM');
+      });
+    else child.kill('SIGTERM');
     const kill = setTimeout(() => child.kill('SIGKILL'), 1000);
     try {
       await exited;

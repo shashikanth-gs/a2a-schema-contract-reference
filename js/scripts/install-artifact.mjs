@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { readFile, mkdir, writeFile, realpath } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { npm } from './process.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -23,7 +23,7 @@ if (installed.version !== configuration.version) throw new Error('Installed SDK 
 const corePath = await realpath(
   fileURLToPath(import.meta.resolve(configuration.packageName + '/core')),
 );
-if (!corePath.startsWith((await realpath(installedRoot)) + '/'))
+if (!corePath.startsWith((await realpath(installedRoot)) + sep))
   throw new Error('SDK resolved outside installed artifact');
 await mkdir(resolve(root, 'reports'), { recursive: true });
 await writeFile(

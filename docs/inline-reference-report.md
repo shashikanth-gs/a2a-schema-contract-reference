@@ -7,7 +7,7 @@ Implementation provenance is recorded in the workspace `CHECKPOINTS.md`.
 
 | Input                 | Validated value                                                                                                 |
 | --------------------- | --------------------------------------------------------------------------------------------------------------- |
-| SDK package           | `@shashikanth-gs/a2a-schema-contract@0.1.0-dev.0`                                                               |
+| SDK package           | `a2a-schema-contract@0.1.0-dev.0`                                                                               |
 | SDK source checkpoint | `eb0dda05c0bf77d5250184006bb499691f454d3c`                                                                      |
 | Artifact SHA-256      | `3476778550e9b570bb60d7529faa6c7a63c4fee9d67f0911e879809cdd8f1bd4`                                              |
 | Contract revision     | `v0.1.0-draft.1`, `a5c007510faa3fce85190f2e76e402faf0e897ad`                                                    |

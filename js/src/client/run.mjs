@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { TaskState, SendMessageRequest } from '@a2a-js/sdk';
-import { discoverContractClient } from '@shashikanth-gs/a2a-schema-contract/client';
-import { ContractError, EXTENSION_URI } from '@shashikanth-gs/a2a-schema-contract/core';
+import { discoverContractClient } from 'a2a-schema-contract/client';
+import { ContractError, EXTENSION_URI } from 'a2a-schema-contract/core';
 import { invoke as typedInvoke } from '../../dist/client/invoke.js';
 import { withAgent } from '../../scripts/harness.mjs';
 export const manifest = JSON.parse(

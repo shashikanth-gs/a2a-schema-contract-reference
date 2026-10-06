@@ -1,8 +1,8 @@
 # Reference implementation delivery plan
 
-Updated: 2026-10-06  
-Status: REF-001/002 complete locally; Node inline artifact-consumer evidence available
-Next task: REF-003 after SDK-007; SDK-006 is complete and workspace next task is SDK-007
+Updated: 2026-10-07\
+Status: REF-001–004 and REF-010 complete for the Node candidate; Python applications remain planned
+Next gate: Python SDK-009, then SDK-010/011 and REF-005/006 with shared discovery and prepared-schema parity cases.
 Companion tracking: [SDK roadmap](https://github.com/shashikanth-gs/a2a-schema-contract-sdk/blob/main/PLAN.md). Workspace milestone tracking is maintained internally.
 
 This repository demonstrates how real clients and agents use the reusable packages. It is an independent consumer and interoperability check, not a second implementation of SDK internals. The initial specification revision is pinned in [contract-source.json](contract-source.json).
@@ -15,13 +15,14 @@ This table owns REF-* statuses. SDK-* dependencies are tracked in the SDK reposi
 |---|---|---|---|---|
 | REF-001 | Reproducible Node package-consumer harness | DONE | Codex | SDK-002, SDK-004 |
 | REF-002 | Complete deterministic Node reference scenarios | DONE | Codex | REF-001, SDK-005 |
-| REF-003 | Node protocol, failure and security demonstrations | PLANNED | Unassigned | REF-002, SDK-006, SDK-007 |
-| REF-004 | Node developer/operations guide and validation report | PLANNED | Unassigned | REF-003 |
+| REF-003 | Node protocol, failure and security demonstrations | DONE | Codex | REF-002, SDK-006, SDK-007 |
+| REF-004 | Node developer/operations guide and validation report | DONE | Codex | REF-003 |
 | REF-005 | Complete Python reference applications | PLANNED | Unassigned | REF-004, SDK-010, SDK-011 |
-| REF-006 | Four-pairing interoperability and parity suite | PLANNED | Unassigned | REF-005, SDK-007, SDK-011 |
+| REF-006 | Four-pairing interoperability and parity suite | PLANNED | Unassigned | REF-005, SDK-007, SDK-011, REF-010 |
 | REF-007 | Schema-driven generation demonstration | DEFERRED | Unassigned | REF-002, SDK-005 |
-| REF-008 | Cross-repository CI and joint reference readiness | PLANNED | Unassigned | REF-006, SDK-008, SDK-012 |
+| REF-008 | Cross-repository CI and joint reference readiness | PLANNED | Unassigned | REF-006, SDK-008, SDK-012, REF-010 |
 | REF-009 | Bundle and XML/XSD reference coverage | DEFERRED | Unassigned | REF-008, SDK-014, SDK-015 |
+| REF-010 | Installed Node skill discovery and schema-access workflow | DONE | Codex | REF-004, SDK-016–019 |
 
 ## Working rules and definition of done
 
@@ -80,7 +81,7 @@ Acceptance criteria:
 - Validate cancellation, timeout, shutdown, concurrent-request separation, secret/error redaction and no leaked child processes/sockets.
 - Produce structured, sanitized scenario reports and explain how to diagnose each failure. SDK fixes belong in the SDK repository; reference code must not work around a broken library.
 
-Evidence: Not started.
+Evidence: Started/completed 2026-10-06 by Codex on `codex/m3-node-release-candidate`; accepted reference source `0a428afdf81bfee952d351763507db598f3512b5`, [draft PR #1](https://github.com/shashikanth-gs/a2a-schema-contract-reference/pull/1). [Accepted hosted matrix](https://github.com/shashikanth-gs/a2a-schema-contract-reference/actions/runs/37510461774) passes Linux Node 22.23.3/24.21.0 and macOS/Windows Node 24.21.0. Fresh local `npm run check:clean` on both runtimes passes 48 tests without skips, 37 inline and 43 independently authored security scenarios, zero installation audits and full/single documented runners. Exact private SDK `a2a-schema-contract@0.1.0-rc.0`, SDK source `7481b002f55a0961ea4ee21e36da446f2a3b9ea8`, normative source `a5c007510faa3fce85190f2e76e402faf0e897ad` and tarball SHA-256 `0f29b101df8af091fc2337cdc5eda6f0e7a234cdd18ac9330bf19d65f270c60e`. [Candidate report](docs/node-candidate-report.md), `js/reports/node-candidate-summary.json` and paired `security-node{22,24}.json` retain source/hash/requirements/outcomes. Direct invalid wire input causes zero execution; output schema/echo/terminal failures and count/byte overflow with valid controls publish no successful Artifact; dishonest peers, protocol/domain versions, optional activation, concurrency, cancel/disconnect/deadline, redaction and owned child/worker cleanup are checked. Real externally advertised HTTPS catalog round-trip and server refusal use the same prepared contract; pins/cache/address/redirect/integrity/unavailable/budget cases use explicit trusted loopback fixture policy. No SDK internals, normative edits or publication; Python, broader transports/dialects and bundles/XML remain excluded.
 
 ## REF-004: Node developer/operations guide and validation report
 
@@ -95,7 +96,7 @@ Acceptance criteria:
 - Store reports referencing artifact hashes, source revisions and profile requirements. No undocumented manual source edits should be necessary to reproduce the validation.
 - Provide the independent Node acceptance evidence consumed by SDK-008 and root milestone M3. Unimplemented profile requirements remain visible rather than being renamed as successful demonstrations.
 
-Evidence: Not started.
+Evidence: Started/completed 2026-10-06 by Codex; same accepted source/artifact/runtime/hosted gates as REF-003. [Candidate report](docs/node-candidate-report.md), [operations guide](docs/node-operations.md), [verified quickstart](js/README.md), flow/scenario tutorial, exact `js/artifact-input.json` pin and machine reports. Readiness, hosts/ports, graceful shutdown and forced cleanup, body/staging/worker/resolver limits, diagnostics, exact administrator resolver policy, credential/context ownership and failure troubleshooting are documented. Independent plain-JS and compiled-TS consumers, public types/resources, full/single runners and source-to-artifact CI pass with no manual runtime source edits; 48 tests, 37 inline and 43 security scenarios, no skips. SDK-008/M3 consume this evidence; registry ownership/provenance/publication, Python parity and wider scope remain separate gates.
 
 ## REF-005: Complete Python reference applications
 
@@ -125,6 +126,7 @@ Acceptance criteria:
 - Prevent false passes from source imports, reused servers/state, skipped pairings, transient-port races or uncontrolled internet dependencies. Report each pairing and required scenario separately.
 - Produce a requirements-linked parity report and documented commands to reproduce failures. Differences outside the selected profile are explicit unsupported cases, not silent fallbacks.
 - Provide evidence for SDK-012 and root milestone M4. If a common draft ambiguity emerges, document it and propose a specification change separately.
+- Extend all four pairings with REF-010's skill-associated discovery, embedded/external schema inspection and documented binding fixtures. Verify matching Python public APIs without source imports, duplicated schemas or framework dependencies.
 
 Evidence: Not started.
 
@@ -172,12 +174,28 @@ Acceptance criteria:
 
 Evidence: Deferred; waits for complete bundle/XML SDK support.
 
+## REF-010: Installed Node skill discovery and schema-access workflow
+
+Outcome: a new ordinary application starts with an Agent Card, discovers skill-associated contracts, inspects prepared schemas and consumes a validated result through the public SDK package.
+
+Acceptance criteria:
+
+- Author a deterministic flight-search-style example with advertised skills and independently owned domain contracts. Use the same contracts in embedded and external catalog/schema variants; the consumer does not recreate provider schemas.
+- Discover matching contracts from a skill, inspect presence/representations/immutable schema resources, explicitly choose a contract and invoke it. Exercise text-to-JSON and structured request/result paths without model credentials.
+- Cover many-to-many associations, unmapped/stale references, unsupported alternatives and ambiguity. Unresolved ambiguity causes no dispatch; associations do not secretly select execution routes.
+- Use advertisement helpers without post-construction params mutation. Verify no extra retrieval during inspection/invocation, independent invalid-input/output rejection and the documented metadata binding.
+- Run plain-JS and compiled-TS consumers from exact installed tarballs with cleanup and supported Node evidence. No SDK internals, copied resolution logic, provider or framework dependencies.
+- Deliver a concise tutorial and independent report with artifact hashes, expected outcomes and limits; supply shared cases for REF-006's four-pairing verification.
+
+Evidence: Started/completed 2026-10-07 by Codex; [validation report](docs/developer-experience-report.md), [tutorial](docs/discovery-tutorial.md), runtime source `6c662a312183b5dd189bf941caf86223f1415644` and [draft PR #1](https://github.com/shashikanth-gs/a2a-schema-contract-reference/pull/1). Private SDK RC1 source `07ddd60e339ed0d86f2ace091e263a7aa369a0b9`, SHA-256 `09c0146a2d9d1ba110fd6d888374ce0233f8effc1df77dc42f6a167bd4717677`, normative source unchanged. Fresh Node 22.23.3/24.21.0 checks pass 49 tests, 37 inline/43 security scenarios, 28 flight-discovery checks and documented commands with zero audits/skips. [Hosted matrix](https://github.com/shashikanth-gs/a2a-schema-contract-reference/actions/runs/37526845838) passes Linux Node 22/24 and macOS/Windows Node 24. Provider-owned embedded/external catalogs, ordinary JS/strict TS public consumers, immutable native resources, explicit selection/ambiguity, zero-dispatch/output/dishonest-peer refusals and cleanup are demonstrated. No duplicated client schemas, SDK internals, framework/model dependencies, Python parity or publication.
+
 ## Progress log
 
 | Date | Task | Update | Evidence |
 |---|---|---|---|
 | 2026-10-06 | Planning | Nine deliverable tasks recorded; all implementation work remains unstarted | This plan; workspace PREP-003 |
 | 2026-10-06 | REF-001 readiness | SDK-004/005 complete locally; harness READY. REF-001/002 can be executed as one batch, keeping separate completion evidence | SDK integration report; final tarballs in SDK `js/artifacts/integration-node{22,24}/` |
+| 2026-10-07 | REF-010 planning | Accepted installed Node discovery/schema-access workflow; REF-006/008 expanded for shared API parity and joint readiness. No implementation completed. | SDK ADR-013; SDK-016–019; developer-experience review |
 
 | 2026-10-06 | REF-001/002 | DONE locally; isolated installed consumers and 37 deterministic inline scenarios pass on Node 22/24 | docs/inline-reference-report.md; js/reports/clean-node{22,24}.json and scenarios-node{22,24}.json; M2 evidence available |
 
@@ -188,3 +206,8 @@ The repository front page, description, discovery topics and contributor/securit
 guides distinguish the implemented Node preview from planned Python and release
 work. Original task reports retain their validation-time context. Source hosting
 does not publish an npm/PyPI package or close the remaining release gates.
+
+
+| 2026-10-06 | REF-003/004 candidate work | Independent protocol/security scenarios, raw direct requests with binding headers, output races, dishonest peers, resolver fixtures, owned worker cleanup, operations guide and pinned source-to-artifact portability workflow implemented. Final fresh/hosted consumer gates remain open. | docs/node-operations.md; js/src/client/security.mjs; node-candidate.yml |
+
+| 2026-10-07 | REF-010 | DONE; installed embedded/external flight discovery accepted; workspace M3a complete | docs/developer-experience-report.md; hosted runtime source 6c662a3; exact RC1 artifact pin |

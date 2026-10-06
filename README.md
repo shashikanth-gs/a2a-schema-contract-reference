@@ -12,9 +12,10 @@ representation, activates the extension, and validates the result. Deterministic
 scenarios make the behavior reproducible without a model provider or cloud
 credentials.
 
-**Development preview:** the Node applications cover **37 inline scenarios**
-against a hash-pinned SDK checkpoint. Python applications, external-resolution
-security scenarios and cross-language interoperability are planned. Package
+**Node release candidate:** the applications cover **37 inline scenarios**
+and **43 independent protocol/security scenarios**, plus **28 flight-discovery
+checks** in embedded/external variants against a hash-pinned SDK
+artifact. Python applications and cross-language interoperability are planned. Package
 releases are not published. The community specification remains authoritative:
 [A2A Schema Contract](https://github.com/shashikanth-gs/a2a-schema-contract).
 
@@ -26,6 +27,7 @@ releases are not published. The community specification remains authoritative:
 - Empty values and nested JSON null, with explicit unsupported-carrier refusal.
 - Task and Message results, bounded atomic SSE results and INPUT_REQUIRED continuation.
 - Plain JavaScript and compiled TypeScript clients consuming the installed SDK.
+- Skill-associated discovery, immutable schema resources and compact explicit invocation.
 
 The reference imports public package paths and keeps its own expected results.
 Application execution does not depend on an SDK source checkout or workspace
@@ -34,25 +36,27 @@ schema files.
 ## Get started
 
 Use Node **22 >=22.23.3** or **24 >=24.21.0**, npm and ESM. The reference currently
-accepts the SDK's original inline checkpoint. Build that exact revision so the
+accepts the unscoped Node release candidate. Build that exact revision so the
 artifact matches the committed SHA-256 pin.
 
 From a directory where you want both checkouts:
 
 ```sh
 git clone https://github.com/shashikanth-gs/a2a-schema-contract-sdk.git
-git -C a2a-schema-contract-sdk checkout --detach eb0dda05c0bf77d5250184006bb499691f454d3c
+git -C a2a-schema-contract-sdk checkout --detach 07ddd60e339ed0d86f2ace091e263a7aa369a0b9
 cd a2a-schema-contract-sdk/js
 npm ci
 npm run build
 mkdir -p artifacts
 npm pack --ignore-scripts --pack-destination artifacts
 cd ../..
-export SDK_ARTIFACT="$PWD/a2a-schema-contract-sdk/js/artifacts/shashikanth-gs-a2a-schema-contract-0.1.0-dev.0.tgz"
+export SDK_ARTIFACT="$PWD/a2a-schema-contract-sdk/js/artifacts/a2a-schema-contract-0.1.0-rc.1.tgz"
 git clone https://github.com/shashikanth-gs/a2a-schema-contract-reference.git
+git -C a2a-schema-contract-reference checkout codex/m3-node-release-candidate
 cd a2a-schema-contract-reference/js
 npm run artifact:install
 npm run scenarios
+npm run discovery
 ```
 
 `artifact:install` verifies the tarball before installing dependencies. The runner
@@ -74,8 +78,12 @@ reference runs independently thereafter.
 | Guide | What it covers |
 |---|---|
 | [Node quickstart](js/README.md) | Artifact intake, agent/client commands and local execution |
+| [Flight-discovery tutorial](docs/discovery-tutorial.md) | Skill associations, original schema resources and compact invocation |
+| [Developer-experience validation](docs/developer-experience-report.md) | RC1 artifact pin and installed JS/TS acceptance |
 | [Wire-flow tutorial](docs/inline-tutorial.md) | Discovery, schema construction, activation, validation and scenario behavior |
-| [Validation report](docs/inline-reference-report.md) | Exact artifact/revision pins, test evidence and supported limits |
+| [Inline checkpoint report](docs/inline-reference-report.md) | Exact artifact/revision pins, test evidence and supported limits |
+| [Candidate validation](docs/node-candidate-report.md) | Source/checksum pins, independent security scenarios and actual hosted matrix |
+| [Operations guide](docs/node-operations.md) | Readiness, shutdown, limits, authentication/context ownership and troubleshooting |
 | [Scenario manifest](fixtures/scenarios.json) | Independent expected outcomes for the 37 scenarios |
 | [SDK implementation](https://github.com/shashikanth-gs/a2a-schema-contract-sdk) | Reusable core, client/server adapters and HTTPS resolver |
 | [Community specification](https://github.com/shashikanth-gs/a2a-schema-contract) | Normative draft and extension schemas |
@@ -83,8 +91,8 @@ reference runs independently thereafter.
 
 The pinned artifact version, SHA-256 and SDK revision are in
 [js/artifact-input.json](js/artifact-input.json). This reference checkpoint uses
-SDK commit `eb0dda05c0bf77d5250184006bb499691f454d3c`, while the SDK's current main
-branch also includes secure external resolution. A new artifact requires reviewed
+SDK commit `07ddd60e339ed0d86f2ace091e263a7aa369a0b9`, including secure external
+resolution and isolated async schema validation. A new artifact requires reviewed
 pin updates and fresh consumer validation.
 
 ## Validate and contribute
@@ -93,14 +101,16 @@ After `artifact:install`, from `js/`:
 
 ```sh
 npm run check
+npm run security
 npm run check:clean
 ```
 
-Both Node 22.23.3 and 24.21.0 passed **47 tests, including the 37 scenarios**, in
-fresh reference-only consumers on macOS. The manual
-[artifact-consumer workflow](.github/workflows/node-artifact-smoke.yml) accepts a
-reviewed public HTTPS tarball URL and verifies the committed hash. Hosted
-portability and security/operational evidence remain separate roadmap gates.
+Candidate validation uses fresh installed consumers on Node 22.23.3 and
+24.21.0. The [candidate workflow](.github/workflows/node-candidate.yml) also
+checks Linux Node 22/24 and macOS/Windows Node 24, building the exact SDK revision
+and verifying the artifact pin. The manual artifact workflow remains available.
+The [operations guide](docs/node-operations.md) covers deployment and diagnostics;
+final run evidence is recorded in the candidate report and PLAN.md.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for scenario and artifact changes and
 [SECURITY.md](SECURITY.md) for private vulnerability reporting. Use

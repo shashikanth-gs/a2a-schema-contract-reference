@@ -1,12 +1,12 @@
 {
   "result": "PASS",
-  "node": "v24.21.0",
+  "node": "v22.23.3",
   "platform": "darwin",
   "artifact": {
-    "packageName": "a2a-schema-contract",
-    "version": "0.1.0-rc.1",
-    "sha256": "09c0146a2d9d1ba110fd6d888374ce0233f8effc1df77dc42f6a167bd4717677",
-    "sdkCommit": "07ddd60e339ed0d86f2ace091e263a7aa369a0b9",
+    "packageName": "@shashikanth-gs/a2a-schema-contract",
+    "version": "0.1.0-dev.0",
+    "sha256": "3476778550e9b570bb60d7529faa6c7a63c4fee9d67f0911e879809cdd8f1bd4",
+    "sdkCommit": "eb0dda05c0bf77d5250184006bb499691f454d3c",
     "contractCommit": "a5c007510faa3fce85190f2e76e402faf0e897ad"
   },
   "isolation": "Temporary reference-only copy; hash-verified tarball staging then locked npm ci; SDK/source inputs absent",
@@ -17,12 +17,9 @@
     "compiled-typescript",
     "plain-javascript",
     "37-inline-scenarios",
-    "independent-protocol-security-and-HTTPS-scenarios",
     "lifecycle-cleanup",
     "documented-runner",
-    "single-scenario-command",
-    "ordinary-JS-and-strict-TS-flight-discovery-embedded-and-external",
-    "documented-discovery-runner"
+    "single-scenario-command"
   ],
-  "elapsedMs": 75160
+  "elapsedMs": 13386
 }
