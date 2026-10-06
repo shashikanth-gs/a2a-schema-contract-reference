@@ -46,3 +46,11 @@ recipe. These deterministic local examples do not call a flight service or model
 The established bounded JSON/text, transport, resolver and carrier restrictions
 remain. Python/four-pairing parity and ADK/LangGraph adapters are separate work;
 no framework dependency or registry publication is introduced.
+
+The expanded Windows run exposed the harness's former three-minute aggregate
+command budget: flight discovery passed in 26 seconds, inline/documented suites
+passed, and the command owner terminated the security suite at 180 seconds.
+The complete format/lint/build/test command now has a six-minute bound; the
+two-variant flight test uses the same 90-second suite bound as the existing
+scenario suites. Individual SDK validation, execution, cancellation and negative
+deadline tests retain their original bounds. No assertion or check is skipped.

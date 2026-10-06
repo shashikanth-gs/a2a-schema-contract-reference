@@ -36,7 +36,9 @@ try {
   } finally {
     process.env.SDK_ARTIFACT = previous;
   }
-  await npm(['run', 'check'], { cwd: js });
+  // This wraps formatting/build plus several independently bounded suites.
+  // The expanded discovery suite can put Windows over the default three minutes.
+  await npm(['run', 'check'], { cwd: js, timeoutMs: 360000 });
   await npm(['run', 'scenarios', '--', '--scenario', 'invoice-json-discovery'], { cwd: js });
   // Restore a full report after verifying the single-scenario tutorial command.
   await npm(['run', 'scenarios'], { cwd: js });

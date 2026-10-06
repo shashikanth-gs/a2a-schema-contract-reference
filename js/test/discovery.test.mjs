@@ -5,7 +5,7 @@ import { liveChildren } from '../scripts/harness.mjs';
 
 test(
   'installed ordinary JS/TS apps discover embedded/external flight contracts without duplicated schemas',
-  { timeout: 30000 },
+  { timeout: 90000 },
   async () => {
     const report = await runAllDiscovery();
     assert.equal(report.result, 'PASS');
