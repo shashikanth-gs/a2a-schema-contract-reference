@@ -1,0 +1,681 @@
+{
+  "formatVersion": 1,
+  "profile": "inline-json-text",
+  "extensionUri": "https://w3id.org/a2a-schema-contract/draft/0.1",
+  "scenarios": [
+    {
+      "id": "invoice-json-discovery",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "quantity": 3,
+            "unitPrice": 7,
+            "label": null
+          }
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "total": 21,
+          "label": null
+        },
+        "representationId": "rich"
+      }
+    },
+    {
+      "id": "invoice-compact-selection",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "quantity": 3,
+            "unitPrice": 7,
+            "label": null
+          }
+        },
+        "acceptedOutputRepresentationIds": ["compact"]
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "total": 21
+        },
+        "representationId": "compact"
+      }
+    },
+    {
+      "id": "json-to-text",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "quantity": 3,
+            "unitPrice": 7,
+            "label": null
+          }
+        },
+        "acceptedOutputRepresentationIds": ["text"]
+      },
+      "expected": {
+        "present": true,
+        "value": "21",
+        "representationId": "text"
+      }
+    },
+    {
+      "id": "text-to-json",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "text",
+          "value": "9"
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "total": 9,
+          "label": null
+        },
+        "representationId": "rich"
+      }
+    },
+    {
+      "id": "empty-text-to-json",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "text",
+          "value": ""
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "total": 0,
+          "label": null
+        },
+        "representationId": "rich"
+      }
+    },
+    {
+      "id": "media-negotiation",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "quantity": 3,
+            "unitPrice": 7,
+            "label": null
+          }
+        },
+        "acceptedOutputRepresentationIds": ["rich", "text"],
+        "configuration": {
+          "acceptedOutputModes": ["Text/Plain; Charset=\"utf-8\""],
+          "returnImmediately": false
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": "21",
+        "representationId": "text"
+      }
+    },
+    {
+      "id": "same-media-companions",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "quantity": 3,
+            "unitPrice": 7,
+            "label": null
+          }
+        },
+        "companions": [
+          {
+            "data": {
+              "unrelated": true
+            },
+            "mediaType": "application/json"
+          },
+          {
+            "text": ""
+          }
+        ],
+        "metadata": {
+          "companions": true
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "total": 21,
+          "label": null
+        },
+        "representationId": "rich",
+        "inputPartCount": 3,
+        "artifactCount": 2
+      }
+    },
+    {
+      "id": "standalone-message",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "quantity": 3,
+            "unitPrice": 7,
+            "label": null
+          }
+        },
+        "metadata": {
+          "message": true
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "total": 21,
+          "label": null
+        },
+        "representationId": "rich",
+        "carrier": "message"
+      }
+    },
+    {
+      "id": "presence-required-required",
+      "invocation": {
+        "contractId": "urn:reference:presence-required-required:1",
+        "input": {
+          "representationId": "json",
+          "value": {}
+        },
+        "metadata": {
+          "omit": false
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "inputPresent": true
+        },
+        "representationId": "json",
+        "inputPresent": true
+      }
+    },
+    {
+      "id": "presence-required-optional",
+      "invocation": {
+        "contractId": "urn:reference:presence-required-optional:1",
+        "input": {
+          "representationId": "json",
+          "value": {}
+        },
+        "metadata": {
+          "omit": true
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": true,
+        "artifactCount": 0
+      }
+    },
+    {
+      "id": "presence-required-none",
+      "invocation": {
+        "contractId": "urn:reference:presence-required-none:1",
+        "input": {
+          "representationId": "json",
+          "value": {}
+        },
+        "metadata": {
+          "omit": false
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": true,
+        "artifactCount": 0
+      }
+    },
+    {
+      "id": "presence-optional-required",
+      "invocation": {
+        "contractId": "urn:reference:presence-optional-required:1",
+        "metadata": {
+          "omit": false
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "inputPresent": false
+        },
+        "representationId": "json",
+        "inputPresent": false
+      }
+    },
+    {
+      "id": "presence-optional-optional",
+      "invocation": {
+        "contractId": "urn:reference:presence-optional-optional:1",
+        "metadata": {
+          "omit": true
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": false,
+        "artifactCount": 0
+      }
+    },
+    {
+      "id": "presence-optional-none",
+      "invocation": {
+        "contractId": "urn:reference:presence-optional-none:1",
+        "metadata": {
+          "omit": false
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": false,
+        "artifactCount": 0
+      }
+    },
+    {
+      "id": "presence-none-required",
+      "invocation": {
+        "contractId": "urn:reference:presence-none-required:1",
+        "metadata": {
+          "omit": false
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "inputPresent": false
+        },
+        "representationId": "json",
+        "inputPresent": false
+      }
+    },
+    {
+      "id": "presence-none-optional",
+      "invocation": {
+        "contractId": "urn:reference:presence-none-optional:1",
+        "metadata": {
+          "omit": true
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": false,
+        "artifactCount": 0
+      }
+    },
+    {
+      "id": "presence-none-none",
+      "invocation": {
+        "contractId": "urn:reference:presence-none-none:1",
+        "metadata": {
+          "omit": false
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": false,
+        "artifactCount": 0
+      }
+    },
+    {
+      "id": "optional-input-False-output-False",
+      "invocation": {
+        "contractId": "urn:reference:presence-optional-optional:1",
+        "metadata": {
+          "omit": true
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": false
+      }
+    },
+    {
+      "id": "optional-input-False-output-True",
+      "invocation": {
+        "contractId": "urn:reference:presence-optional-optional:1",
+        "metadata": {
+          "omit": false
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "inputPresent": false
+        },
+        "representationId": "json",
+        "inputPresent": false
+      }
+    },
+    {
+      "id": "optional-input-True-output-False",
+      "invocation": {
+        "contractId": "urn:reference:presence-optional-optional:1",
+        "input": {
+          "representationId": "json",
+          "value": []
+        },
+        "metadata": {
+          "omit": true
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": true
+      }
+    },
+    {
+      "id": "optional-input-True-output-True",
+      "invocation": {
+        "contractId": "urn:reference:presence-optional-optional:1",
+        "input": {
+          "representationId": "json",
+          "value": []
+        },
+        "metadata": {
+          "omit": false
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "inputPresent": true
+        },
+        "representationId": "json",
+        "inputPresent": true
+      }
+    },
+    {
+      "id": "schemaless-false",
+      "invocation": {
+        "contractId": "urn:reference:echo:1",
+        "input": {
+          "representationId": "json",
+          "value": false
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": false,
+        "representationId": "json"
+      }
+    },
+    {
+      "id": "schemaless-zero",
+      "invocation": {
+        "contractId": "urn:reference:echo:1",
+        "input": {
+          "representationId": "json",
+          "value": 0
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": 0,
+        "representationId": "json"
+      }
+    },
+    {
+      "id": "schemaless-string",
+      "invocation": {
+        "contractId": "urn:reference:echo:1",
+        "input": {
+          "representationId": "json",
+          "value": ""
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": "",
+        "representationId": "json"
+      }
+    },
+    {
+      "id": "schemaless-array",
+      "invocation": {
+        "contractId": "urn:reference:echo:1",
+        "input": {
+          "representationId": "json",
+          "value": []
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": [],
+        "representationId": "json"
+      }
+    },
+    {
+      "id": "schemaless-object",
+      "invocation": {
+        "contractId": "urn:reference:echo:1",
+        "input": {
+          "representationId": "json",
+          "value": {}
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {},
+        "representationId": "json"
+      }
+    },
+    {
+      "id": "schemaless-nested-array-null",
+      "invocation": {
+        "contractId": "urn:reference:echo:1",
+        "input": {
+          "representationId": "json",
+          "value": [null]
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": [null],
+        "representationId": "json"
+      }
+    },
+    {
+      "id": "schemaless-nested-object-null",
+      "invocation": {
+        "contractId": "urn:reference:echo:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "nested": null
+          }
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "nested": null
+        },
+        "representationId": "json"
+      }
+    },
+    {
+      "id": "text-empty",
+      "invocation": {
+        "contractId": "urn:reference:text:1",
+        "input": {
+          "representationId": "text",
+          "value": ""
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": "",
+        "representationId": "text"
+      }
+    },
+    {
+      "id": "boolean-schema-true",
+      "invocation": {
+        "contractId": "urn:reference:boolean-true:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "ok": true
+          }
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "ok": true
+        },
+        "representationId": "json"
+      }
+    },
+    {
+      "id": "root-null-refused",
+      "invocation": {
+        "contractId": "urn:reference:echo:1",
+        "input": {
+          "representationId": "json",
+          "value": null
+        }
+      },
+      "expected": {
+        "localError": "UNSUPPORTED_CARRIER",
+        "executions": 0
+      }
+    },
+    {
+      "id": "boolean-schema-false",
+      "invocation": {
+        "contractId": "urn:reference:boolean-false:1",
+        "input": {
+          "representationId": "json",
+          "value": {}
+        }
+      },
+      "expected": {
+        "localError": "INSTANCE_INVALID",
+        "executions": 0
+      }
+    },
+    {
+      "id": "required-absence",
+      "invocation": {
+        "contractId": "urn:reference:presence-required-required:1"
+      },
+      "expected": {
+        "localError": "PAYLOAD_PRESENCE_VIOLATION",
+        "executions": 0
+      }
+    },
+    {
+      "id": "none-input-refused",
+      "invocation": {
+        "contractId": "urn:reference:presence-none-none:1",
+        "input": {
+          "representationId": "json",
+          "value": {}
+        }
+      },
+      "expected": {
+        "localError": "REPRESENTATION_NOT_SUPPORTED",
+        "executions": 0
+      }
+    },
+    {
+      "id": "atomic-companion-stream",
+      "transport": "sse",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "quantity": 3,
+            "unitPrice": 7,
+            "label": null
+          }
+        },
+        "metadata": {
+          "stream": true
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "total": 21,
+          "label": null
+        },
+        "representationId": "rich",
+        "companionEvents": true
+      }
+    },
+    {
+      "id": "input-required-continuation",
+      "transport": "continuation",
+      "invocation": {
+        "contractId": "urn:reference:invoice:1",
+        "input": {
+          "representationId": "json",
+          "value": {
+            "quantity": 3,
+            "unitPrice": 7,
+            "label": null
+          }
+        },
+        "metadata": {
+          "prompt": true
+        }
+      },
+      "expected": {
+        "present": true,
+        "value": {
+          "total": 21,
+          "label": null
+        },
+        "representationId": "rich",
+        "executions": 2
+      }
+    },
+    {
+      "id": "no-output-companion-stream",
+      "transport": "sse",
+      "invocation": {
+        "contractId": "urn:reference:presence-none-none:1",
+        "companions": [
+          {
+            "text": "Run the no-output operation.",
+            "mediaType": "text/plain"
+          }
+        ],
+        "metadata": {
+          "stream": true
+        }
+      },
+      "expected": {
+        "present": false,
+        "inputPresent": false,
+        "artifactCount": 0,
+        "companionEvents": true
+      }
+    }
+  ]
+}

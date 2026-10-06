@@ -1,0 +1,369 @@
+{
+  "contracts": [
+    {
+      "id": "urn:reference:invoice:1",
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["quantity", "unitPrice", "label"],
+                "properties": {
+                  "quantity": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "unitPrice": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "label": {
+                    "type": ["string", "null"]
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          {
+            "id": "text",
+            "mediaType": "text/plain",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "string",
+                "pattern": "^[0-9]*$",
+                "maxLength": 4
+              }
+            }
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "rich",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["total", "label"],
+                "properties": {
+                  "total": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "label": {
+                    "type": ["string", "null"]
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          {
+            "id": "compact",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["total"],
+                "properties": {
+                  "total": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          {
+            "id": "text",
+            "mediaType": "text/plain",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:presence-required-required:1",
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:presence-required-optional:1",
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      },
+      "output": {
+        "presence": "optional",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:presence-required-none:1",
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      },
+      "output": {
+        "presence": "none"
+      }
+    },
+    {
+      "id": "urn:reference:presence-optional-required:1",
+      "input": {
+        "presence": "optional",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:presence-optional-optional:1",
+      "input": {
+        "presence": "optional",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      },
+      "output": {
+        "presence": "optional",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:presence-optional-none:1",
+      "input": {
+        "presence": "optional",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      },
+      "output": {
+        "presence": "none"
+      }
+    },
+    {
+      "id": "urn:reference:presence-none-required:1",
+      "input": {
+        "presence": "none"
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:presence-none-optional:1",
+      "input": {
+        "presence": "none"
+      },
+      "output": {
+        "presence": "optional",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:presence-none-none:1",
+      "input": {
+        "presence": "none"
+      },
+      "output": {
+        "presence": "none"
+      }
+    },
+    {
+      "id": "urn:reference:echo:1",
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:text:1",
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "text",
+            "mediaType": "text/plain"
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "text",
+            "mediaType": "text/plain"
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:boolean-true:1",
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": true
+            }
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:boolean-false:1",
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": false
+            }
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

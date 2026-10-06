@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "node": "v22.23.3",
+  "platform": "darwin",
+  "artifact": {
+    "packageName": "@shashikanth-gs/a2a-schema-contract",
+    "version": "0.1.0-dev.0",
+    "sha256": "3476778550e9b570bb60d7529faa6c7a63c4fee9d67f0911e879809cdd8f1bd4",
+    "sdkCommit": "eb0dda05c0bf77d5250184006bb499691f454d3c",
+    "contractCommit": "a5c007510faa3fce85190f2e76e402faf0e897ad"
+  },
+  "isolation": "Temporary reference-only copy; hash-verified tarball staging then locked npm ci; SDK/source inputs absent",
+  "checks": [
+    "format",
+    "lint",
+    "strict-types",
+    "compiled-typescript",
+    "plain-javascript",
+    "37-inline-scenarios",
+    "lifecycle-cleanup",
+    "documented-runner",
+    "single-scenario-command"
+  ],
+  "elapsedMs": 13386
+}
