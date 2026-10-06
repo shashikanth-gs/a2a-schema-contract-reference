@@ -39,13 +39,29 @@ if (
     new URL(fixtureOrigin).hostname !== 'catalog.test')
 )
   throw new Error('Invalid test resolver origin');
-const catalog = fixtureOrigin
-  ? await createContractResolver({
+const resolver = fixtureOrigin
+  ? createContractResolver({
       allowedOrigins: [fixtureOrigin],
       ca: await readFile(new URL('../../../fixtures/tls/cert.pem', import.meta.url)),
       lookup: () => Promise.resolve([{ address: '127.0.0.1', family: 4 }]),
       allowAddress: (address, hostname) => address === '127.0.0.1' && hostname === 'catalog.test',
-    }).resolveCatalog(source, { origin: 'local' })
+    })
+  : undefined;
+const externalReference =
+  fixtureOrigin && process.env.REFERENCE_CATALOG_URI
+    ? {
+        uri: process.env.REFERENCE_CATALOG_URI,
+        mediaType: 'application/json',
+        integrity: {
+          algorithm: 'sha-256',
+          value: createHash('sha256').update(JSON.stringify(source)).digest('base64'),
+        },
+      }
+    : undefined;
+const catalog = resolver
+  ? externalReference
+    ? await resolver.resolveExtensionParams({ catalog: externalReference }, { origin: 'local' })
+    : await resolver.resolveCatalog(source, { origin: 'local' })
   : source;
 const evidence: {
   contractId: string;
@@ -67,6 +83,8 @@ function invoice(input: JsonValue): { total: number; label: JsonValue } {
   return { total: quantity * unitPrice, label: input.label ?? null };
 }
 function business(execution: ExecutionContract): JsonValue {
+  if (execution.invocation.contractId.startsWith('urn:reference:flight-search:'))
+    return { flights: [{ flightNumber: 'REF101', origin: 'BLR', destination: 'DEL' }] };
   if (execution.invocation.contractId === 'urn:reference:invoice:1') {
     if (!execution.input.present) throw new Error('Expected input');
     const value = invoice(execution.input.value);
@@ -93,9 +111,13 @@ const adapter = createContractServer({
     capabilities: { streaming: true },
     defaultInputModes: ['application/json', 'text/plain'],
     defaultOutputModes: ['application/json', 'text/plain'],
-    skills: [],
+    skills:
+      evidenceEnabled && process.env.REFERENCE_SKILLS_JSON
+        ? (JSON.parse(process.env.REFERENCE_SKILLS_JSON) as unknown)
+        : [],
   }),
   catalog,
+  ...(externalReference ? { catalogDelivery: 'external' as const } : {}),
   required: process.env.REFERENCE_REQUIRED !== '0',
   deadlineMs: Number(process.env.REFERENCE_DEADLINE_MS ?? '30000'),
   validation: {
@@ -394,21 +416,6 @@ const adapter = createContractServer({
     },
   },
 });
-if (fixtureOrigin && process.env.REFERENCE_CATALOG_URI) {
-  const extension = adapter.card.capabilities!.extensions.find(
-    (extension) => extension.uri === EXTENSION_URI,
-  )!;
-  extension.params = {
-    catalog: {
-      uri: process.env.REFERENCE_CATALOG_URI,
-      mediaType: 'application/json',
-      integrity: {
-        algorithm: 'sha-256',
-        value: createHash('sha256').update(JSON.stringify(source)).digest('base64'),
-      },
-    },
-  };
-}
 const app = express();
 app.use(express.json({ limit: '256kb' }));
 const rejectBody: ErrorRequestHandler = (error: unknown, _req, res, _next) => {

@@ -13,7 +13,8 @@ scenarios make the behavior reproducible without a model provider or cloud
 credentials.
 
 **Node release candidate:** the applications cover **37 inline scenarios**
-and **43 independent protocol/security scenarios** against a hash-pinned SDK
+and **43 independent protocol/security scenarios**, plus **28 flight-discovery
+checks** in embedded/external variants against a hash-pinned SDK
 artifact. Python applications and cross-language interoperability are planned. Package
 releases are not published. The community specification remains authoritative:
 [A2A Schema Contract](https://github.com/shashikanth-gs/a2a-schema-contract).
@@ -26,6 +27,7 @@ releases are not published. The community specification remains authoritative:
 - Empty values and nested JSON null, with explicit unsupported-carrier refusal.
 - Task and Message results, bounded atomic SSE results and INPUT_REQUIRED continuation.
 - Plain JavaScript and compiled TypeScript clients consuming the installed SDK.
+- Skill-associated discovery, immutable schema resources and compact explicit invocation.
 
 The reference imports public package paths and keeps its own expected results.
 Application execution does not depend on an SDK source checkout or workspace
@@ -41,19 +43,20 @@ From a directory where you want both checkouts:
 
 ```sh
 git clone https://github.com/shashikanth-gs/a2a-schema-contract-sdk.git
-git -C a2a-schema-contract-sdk checkout --detach 7481b002f55a0961ea4ee21e36da446f2a3b9ea8
+git -C a2a-schema-contract-sdk checkout --detach 31221c30885ff084cffc5e4c0e5a3cd0dc2c5831
 cd a2a-schema-contract-sdk/js
 npm ci
 npm run build
 mkdir -p artifacts
 npm pack --ignore-scripts --pack-destination artifacts
 cd ../..
-export SDK_ARTIFACT="$PWD/a2a-schema-contract-sdk/js/artifacts/a2a-schema-contract-0.1.0-rc.0.tgz"
+export SDK_ARTIFACT="$PWD/a2a-schema-contract-sdk/js/artifacts/a2a-schema-contract-0.1.0-rc.1.tgz"
 git clone https://github.com/shashikanth-gs/a2a-schema-contract-reference.git
 git -C a2a-schema-contract-reference checkout codex/m3-node-release-candidate
 cd a2a-schema-contract-reference/js
 npm run artifact:install
 npm run scenarios
+npm run discovery
 ```
 
 `artifact:install` verifies the tarball before installing dependencies. The runner
@@ -75,6 +78,8 @@ reference runs independently thereafter.
 | Guide | What it covers |
 |---|---|
 | [Node quickstart](js/README.md) | Artifact intake, agent/client commands and local execution |
+| [Flight-discovery tutorial](docs/discovery-tutorial.md) | Skill associations, original schema resources and compact invocation |
+| [Developer-experience validation](docs/developer-experience-report.md) | RC1 artifact pin and installed JS/TS acceptance |
 | [Wire-flow tutorial](docs/inline-tutorial.md) | Discovery, schema construction, activation, validation and scenario behavior |
 | [Inline checkpoint report](docs/inline-reference-report.md) | Exact artifact/revision pins, test evidence and supported limits |
 | [Candidate validation](docs/node-candidate-report.md) | Source/checksum pins, independent security scenarios and actual hosted matrix |
@@ -86,7 +91,7 @@ reference runs independently thereafter.
 
 The pinned artifact version, SHA-256 and SDK revision are in
 [js/artifact-input.json](js/artifact-input.json). This reference checkpoint uses
-SDK commit `7481b002f55a0961ea4ee21e36da446f2a3b9ea8`, including secure external
+SDK commit `31221c30885ff084cffc5e4c0e5a3cd0dc2c5831`, including secure external
 resolution and isolated async schema validation. A new artifact requires reviewed
 pin updates and fresh consumer validation.
 

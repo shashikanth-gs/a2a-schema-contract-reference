@@ -4,9 +4,9 @@
   "platform": "darwin",
   "artifact": {
     "packageName": "a2a-schema-contract",
-    "version": "0.1.0-rc.0",
-    "sha256": "0f29b101df8af091fc2337cdc5eda6f0e7a234cdd18ac9330bf19d65f270c60e",
-    "sdkCommit": "7481b002f55a0961ea4ee21e36da446f2a3b9ea8",
+    "version": "0.1.0-rc.1",
+    "sha256": "6bcc8dcc4d48750c5a9c4c7c2014f62774cceea2c28e00e2e988b5dabe664d50",
+    "sdkCommit": "31221c30885ff084cffc5e4c0e5a3cd0dc2c5831",
     "contractCommit": "a5c007510faa3fce85190f2e76e402faf0e897ad"
   },
   "isolation": "Temporary reference-only copy; hash-verified tarball staging then locked npm ci; SDK/source inputs absent",
@@ -20,7 +20,9 @@
     "independent-protocol-security-and-HTTPS-scenarios",
     "lifecycle-cleanup",
     "documented-runner",
-    "single-scenario-command"
+    "single-scenario-command",
+    "ordinary-JS-and-strict-TS-flight-discovery-embedded-and-external",
+    "documented-discovery-runner"
   ],
-  "elapsedMs": 58909
+  "elapsedMs": 76618
 }

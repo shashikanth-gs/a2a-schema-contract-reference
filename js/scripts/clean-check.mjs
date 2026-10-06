@@ -40,6 +40,7 @@ try {
   await npm(['run', 'scenarios', '--', '--scenario', 'invoice-json-discovery'], { cwd: js });
   // Restore a full report after verifying the single-scenario tutorial command.
   await npm(['run', 'scenarios'], { cwd: js });
+  await npm(['run', 'discovery'], { cwd: js });
   const reports = fileURLToPath(new URL('../reports/', import.meta.url));
   await mkdir(reports, { recursive: true });
   const major = process.versions.node.split('.')[0];
@@ -50,6 +51,10 @@ try {
   await cp(
     join(js, 'reports', `scenarios-node${major}.json`),
     join(reports, `scenarios-node${major}.json`),
+  );
+  await cp(
+    join(js, 'reports', `discovery-node${major}.json`),
+    join(reports, `discovery-node${major}.json`),
   );
   await writeFile(
     join(reports, `clean-node${major}.json`),
@@ -72,6 +77,8 @@ try {
           'lifecycle-cleanup',
           'documented-runner',
           'single-scenario-command',
+          'ordinary-JS-and-strict-TS-flight-discovery-embedded-and-external',
+          'documented-discovery-runner',
         ],
         elapsedMs: Date.now() - started,
       },

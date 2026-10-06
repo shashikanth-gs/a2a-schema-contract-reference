@@ -1,18 +1,19 @@
 # Node reference applications
 
-These independent applications install `a2a-schema-contract@0.1.0-rc.0`
+These independent applications install `a2a-schema-contract@0.1.0-rc.1`
 from a hash-verified npm tarball. They use public imports only. No SDK checkout,
 workspace schemas, npm link, cloud account or model credentials are required.
-Node 22 >=22.23.3 or 24 >=24.21.0, npm, and ESM are supported. Local evidence is
-macOS; hosted Linux CI is configured but has not run. Python remains planned.
+Node 22 >=22.23.3 or 24 >=24.21.0, npm, and ESM are supported. Current candidate evidence is recorded in the developer-experience report.
+Python remains planned.
 
 From `js/`, using a supported Node runtime:
 
 ```sh
-export SDK_ARTIFACT=/absolute/path/to/a2a-schema-contract-0.1.0-rc.0.tgz
+export SDK_ARTIFACT=/absolute/path/to/a2a-schema-contract-0.1.0-rc.1.tgz
 npm run artifact:install
 npm run check
 npm run scenarios
+npm run discovery
 npm run scenarios -- --scenario invoice-json-discovery
 npm run check:clean
 ```
@@ -81,3 +82,11 @@ runs fresh installed consumers on Linux Node 22/24 and macOS/Windows Node 24.
 intentional fault injection; the scenario harness sets it. Leave it disabled in
 normal service operation. The TLS certificate/key under `fixtures/tls/` is a
 public loopback test fixture. Package publishing remains disabled.
+
+## Skill discovery and compact invocation
+
+Run `npm run discovery` for embedded and external flight-search catalogs, skill
+associations, immutable schema resources and compact explicit invocation.
+Both ordinary JS and strict TS applications consume the installed SDK, without
+recreating provider schemas. See [the tutorial](../docs/discovery-tutorial.md) and
+[validation report](../docs/developer-experience-report.md).

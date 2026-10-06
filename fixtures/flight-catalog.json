@@ -1,0 +1,351 @@
+{
+  "contracts": [
+    {
+      "id": "urn:reference:flight-search:1",
+      "skillIds": ["flight-search", "trip-planning"],
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["origin", "destination"],
+                "properties": {
+                  "origin": {
+                    "type": "string"
+                  },
+                  "destination": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["flights"],
+                "properties": {
+                  "flights": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["flightNumber", "origin", "destination"],
+                      "properties": {
+                        "flightNumber": {
+                          "type": "string"
+                        },
+                        "origin": {
+                          "type": "string"
+                        },
+                        "destination": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:flight-search:2",
+      "skillIds": ["flight-search", "trip-planning"],
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "text",
+            "mediaType": "text/plain"
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["flights"],
+                "properties": {
+                  "flights": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["flightNumber", "origin", "destination"],
+                      "properties": {
+                        "flightNumber": {
+                          "type": "string"
+                        },
+                        "origin": {
+                          "type": "string"
+                        },
+                        "destination": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:flight-search:3",
+      "skillIds": ["flight-search"],
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["origin", "destination"],
+                "properties": {
+                  "origin": {
+                    "type": "string"
+                  },
+                  "destination": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          {
+            "id": "text",
+            "mediaType": "text/plain"
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["flights"],
+                "properties": {
+                  "flights": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["flightNumber", "origin", "destination"],
+                      "properties": {
+                        "flightNumber": {
+                          "type": "string"
+                        },
+                        "origin": {
+                          "type": "string"
+                        },
+                        "destination": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:flight-search:4",
+      "skillIds": ["flight-search"],
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/vendor+json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["origin", "destination"],
+                "properties": {
+                  "origin": {
+                    "type": "string"
+                  },
+                  "destination": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["flights"],
+                "properties": {
+                  "flights": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["flightNumber", "origin", "destination"],
+                      "properties": {
+                        "flightNumber": {
+                          "type": "string"
+                        },
+                        "origin": {
+                          "type": "string"
+                        },
+                        "destination": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:flight-search:5",
+      "skillIds": ["missing-skill"],
+      "input": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["origin", "destination"],
+                "properties": {
+                  "origin": {
+                    "type": "string"
+                  },
+                  "destination": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      },
+      "output": {
+        "presence": "required",
+        "representations": [
+          {
+            "id": "json",
+            "mediaType": "application/json",
+            "schema": {
+              "mediaType": "application/schema+json",
+              "dialect": "https://json-schema.org/draft/2020-12/schema",
+              "inline": {
+                "type": "object",
+                "required": ["flights"],
+                "properties": {
+                  "flights": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["flightNumber", "origin", "destination"],
+                      "properties": {
+                        "flightNumber": {
+                          "type": "string"
+                        },
+                        "origin": {
+                          "type": "string"
+                        },
+                        "destination": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "urn:reference:unassociated:1",
+      "input": {
+        "presence": "optional",
+        "representations": [
+          {
+            "id": "text",
+            "mediaType": "text/plain"
+          }
+        ]
+      },
+      "output": {
+        "presence": "none"
+      }
+    }
+  ]
+}

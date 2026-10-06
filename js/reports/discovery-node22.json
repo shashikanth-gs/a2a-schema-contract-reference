@@ -1,0 +1,55 @@
+{
+  "task": "REF-010",
+  "result": "PASS",
+  "runtime": "v22.23.3",
+  "platform": "darwin",
+  "artifact": {
+    "packageName": "a2a-schema-contract",
+    "version": "0.1.0-rc.1",
+    "sha256": "6bcc8dcc4d48750c5a9c4c7c2014f62774cceea2c28e00e2e988b5dabe664d50",
+    "sdkCommit": "31221c30885ff084cffc5e4c0e5a3cd0dc2c5831",
+    "contractCommit": "a5c007510faa3fce85190f2e76e402faf0e897ad"
+  },
+  "variants": [
+    {
+      "variant": "embedded",
+      "result": "PASS",
+      "checks": [
+        "many-to-many-skill-discovery",
+        "unassociated-and-stale-contracts",
+        "unsupported-alternatives",
+        "immutable-schema-resources",
+        "external-graph-and-advertisement",
+        "schemaless-inspection",
+        "ambiguity-zero-dispatch",
+        "invalid-input-zero-dispatch",
+        "explicit-compact-invocation",
+        "text-to-JSON",
+        "invalid-output-no-success",
+        "offline-after-cache-clear",
+        "strict-TS-consumer",
+        "dishonest-peer-refusal"
+      ]
+    },
+    {
+      "variant": "external",
+      "result": "PASS",
+      "checks": [
+        "many-to-many-skill-discovery",
+        "unassociated-and-stale-contracts",
+        "unsupported-alternatives",
+        "immutable-schema-resources",
+        "external-graph-and-advertisement",
+        "schemaless-inspection",
+        "ambiguity-zero-dispatch",
+        "invalid-input-zero-dispatch",
+        "explicit-compact-invocation",
+        "text-to-JSON",
+        "invalid-output-no-success",
+        "offline-after-cache-clear",
+        "strict-TS-consumer",
+        "dishonest-peer-refusal"
+      ]
+    }
+  ]
+}

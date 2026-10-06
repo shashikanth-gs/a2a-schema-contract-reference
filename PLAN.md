@@ -1,8 +1,8 @@
 # Reference implementation delivery plan
 
-Updated: 2026-10-06  
-Status: REF-001–004 complete; independent Node candidate acceptance available
-Next gate: Python SDK implementation (SDK-009–011), then REF-005
+Updated: 2026-10-07\
+Status: REF-001–004 complete for the original Node candidate; shared SDK developer-experience acceptance pending
+Next gate: SDK-016–019, then REF-010. Python foundation remains READY; REF-005/006 include shared discovery and prepared-schema parity cases.
 Companion tracking: [SDK roadmap](https://github.com/shashikanth-gs/a2a-schema-contract-sdk/blob/main/PLAN.md). Workspace milestone tracking is maintained internally.
 
 This repository demonstrates how real clients and agents use the reusable packages. It is an independent consumer and interoperability check, not a second implementation of SDK internals. The initial specification revision is pinned in [contract-source.json](contract-source.json).
@@ -18,10 +18,11 @@ This table owns REF-* statuses. SDK-* dependencies are tracked in the SDK reposi
 | REF-003 | Node protocol, failure and security demonstrations | DONE | Codex | REF-002, SDK-006, SDK-007 |
 | REF-004 | Node developer/operations guide and validation report | DONE | Codex | REF-003 |
 | REF-005 | Complete Python reference applications | PLANNED | Unassigned | REF-004, SDK-010, SDK-011 |
-| REF-006 | Four-pairing interoperability and parity suite | PLANNED | Unassigned | REF-005, SDK-007, SDK-011 |
+| REF-006 | Four-pairing interoperability and parity suite | PLANNED | Unassigned | REF-005, SDK-007, SDK-011, REF-010 |
 | REF-007 | Schema-driven generation demonstration | DEFERRED | Unassigned | REF-002, SDK-005 |
-| REF-008 | Cross-repository CI and joint reference readiness | PLANNED | Unassigned | REF-006, SDK-008, SDK-012 |
+| REF-008 | Cross-repository CI and joint reference readiness | PLANNED | Unassigned | REF-006, SDK-008, SDK-012, REF-010 |
 | REF-009 | Bundle and XML/XSD reference coverage | DEFERRED | Unassigned | REF-008, SDK-014, SDK-015 |
+| REF-010 | Installed Node skill discovery and schema-access workflow | IN_PROGRESS | Codex | REF-004, SDK-016–019 |
 
 ## Working rules and definition of done
 
@@ -125,6 +126,7 @@ Acceptance criteria:
 - Prevent false passes from source imports, reused servers/state, skipped pairings, transient-port races or uncontrolled internet dependencies. Report each pairing and required scenario separately.
 - Produce a requirements-linked parity report and documented commands to reproduce failures. Differences outside the selected profile are explicit unsupported cases, not silent fallbacks.
 - Provide evidence for SDK-012 and root milestone M4. If a common draft ambiguity emerges, document it and propose a specification change separately.
+- Extend all four pairings with REF-010's skill-associated discovery, embedded/external schema inspection and documented binding fixtures. Verify matching Python public APIs without source imports, duplicated schemas or framework dependencies.
 
 Evidence: Not started.
 
@@ -172,12 +174,28 @@ Acceptance criteria:
 
 Evidence: Deferred; waits for complete bundle/XML SDK support.
 
+## REF-010: Installed Node skill discovery and schema-access workflow
+
+Outcome: a new ordinary application starts with an Agent Card, discovers skill-associated contracts, inspects prepared schemas and consumes a validated result through the public SDK package.
+
+Acceptance criteria:
+
+- Author a deterministic flight-search-style example with advertised skills and independently owned domain contracts. Use the same contracts in embedded and external catalog/schema variants; the consumer does not recreate provider schemas.
+- Discover matching contracts from a skill, inspect presence/representations/immutable schema resources, explicitly choose a contract and invoke it. Exercise text-to-JSON and structured request/result paths without model credentials.
+- Cover many-to-many associations, unmapped/stale references, unsupported alternatives and ambiguity. Unresolved ambiguity causes no dispatch; associations do not secretly select execution routes.
+- Use advertisement helpers without post-construction params mutation. Verify no extra retrieval during inspection/invocation, independent invalid-input/output rejection and the documented metadata binding.
+- Run plain-JS and compiled-TS consumers from exact installed tarballs with cleanup and supported Node evidence. No SDK internals, copied resolution logic, provider or framework dependencies.
+- Deliver a concise tutorial and independent report with artifact hashes, expected outcomes and limits; supply shared cases for REF-006's four-pairing verification.
+
+Evidence: Started 2026-10-07 by Codex. Embedded/external installed workflow and tutorial implemented; fresh runtime/hosted acceptance pending.
+
 ## Progress log
 
 | Date | Task | Update | Evidence |
 |---|---|---|---|
 | 2026-10-06 | Planning | Nine deliverable tasks recorded; all implementation work remains unstarted | This plan; workspace PREP-003 |
 | 2026-10-06 | REF-001 readiness | SDK-004/005 complete locally; harness READY. REF-001/002 can be executed as one batch, keeping separate completion evidence | SDK integration report; final tarballs in SDK `js/artifacts/integration-node{22,24}/` |
+| 2026-10-07 | REF-010 planning | Accepted installed Node discovery/schema-access workflow; REF-006/008 expanded for shared API parity and joint readiness. No implementation completed. | SDK ADR-013; SDK-016–019; developer-experience review |
 
 | 2026-10-06 | REF-001/002 | DONE locally; isolated installed consumers and 37 deterministic inline scenarios pass on Node 22/24 | docs/inline-reference-report.md; js/reports/clean-node{22,24}.json and scenarios-node{22,24}.json; M2 evidence available |
 

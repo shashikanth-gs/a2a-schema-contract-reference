@@ -20,12 +20,13 @@
     "start": "npm run build && node dist/server/main.js",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm test",
     "check:clean": "node scripts/clean-check.mjs",
-    "security": "npm run build && node src/client/security.mjs"
+    "security": "npm run build && node src/client/security.mjs",
+    "discovery": "npm run build && node src/client/discovery.mjs"
   },
   "dependencies": {
     "@a2a-js/sdk": "1.3.0",
-    "express": "5.1.0",
-    "a2a-schema-contract": "file:artifacts/sdk.tgz"
+    "a2a-schema-contract": "file:artifacts/sdk.tgz",
+    "express": "5.1.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
