@@ -17,11 +17,10 @@ npm run scenarios -- --scenario invoice-json-discovery
 npm run check:clean
 ```
 
-In this workspace, choose the SDK checkpoint tarball:
-
-```sh
-export SDK_ARTIFACT="$(cd ../../a2a-schema-contract-sdk/js/artifacts/integration-node22 && pwd)/shashikanth-gs-a2a-schema-contract-0.1.0-dev.0.tgz"
-```
+To build the accepted tarball from public source, follow the
+[repository quickstart](../README.md#get-started). It checks out the exact SDK
+revision from `artifact-input.json`; a tarball built from the SDK's current main
+branch will have a different hash and is refused by this checkpoint.
 
 The artifact input is explicit and only this installation step reads that file.
 The application never imports SDK sources. `artifact-input.json` records the

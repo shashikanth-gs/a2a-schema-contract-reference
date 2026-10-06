@@ -3,7 +3,7 @@
 Updated: 2026-10-06  
 Status: REF-001/002 complete locally; Node inline artifact-consumer evidence available
 Next task: REF-003 after SDK-007; SDK-006 is complete and workspace next task is SDK-007
-Companion tracking: [workspace plan](../PLAN.md), [SDK plan](../a2a-schema-contract-sdk/PLAN.md)
+Companion tracking: [SDK roadmap](https://github.com/shashikanth-gs/a2a-schema-contract-sdk/blob/main/PLAN.md). Workspace milestone tracking is maintained internally.
 
 This repository demonstrates how real clients and agents use the reusable packages. It is an independent consumer and interoperability check, not a second implementation of SDK internals. The initial specification revision is pinned in [contract-source.json](contract-source.json).
 
@@ -49,7 +49,7 @@ Acceptance criteria:
 - Prove a fresh isolated consumer can discover the advertised extension and invoke one versioned inline JSON contract. No source checkout or public schema download is necessary for normal execution.
 - Document setup, artifact selection, launch/invoke/cleanup commands and expected output. Record actual package/contract/runtime versions.
 
-Evidence: Started/completed 2026-10-06 by Codex. Local implementation checkpoint recorded in workspace [CHECKPOINTS.md](../CHECKPOINTS.md); no PR or publication. [Validation report](docs/inline-reference-report.md), [quickstart](js/README.md), `js/artifact-input.json` and `js/reports/clean-node{22,24}.json`. Exact SDK 0.1.0-dev.0 tarball SHA-256 `3476778550e9b570bb60d7529faa6c7a63c4fee9d67f0911e879809cdd8f1bd4`, SDK checkpoint `eb0dda05c0bf77d5250184006bb499691f454d3c`, contract `a5c007510faa3fce85190f2e76e402faf0e897ad`, official peer 1.3.0. From `js/` with `SDK_ARTIFACT` set: `npm exec --yes --package=node@22.23.3 -- npm run check:clean` and `npm exec --yes --package=node@24.21.0 -- npm run check:clean` pass fresh reference-only installations, format/lint/strict-types/build, 47 tests including 37 inline scenarios, documented runners and process/artifact negative paths. macOS HTTP/SSE; plain-JS and compiled-TS clients use only public imports. Zero installation audit findings. Manual Linux artifact-consumer CI configured but unrun; no hosted/Windows portability claim. Full release/operational documentation remains REF-004.
+Evidence: Started/completed 2026-10-06 by Codex. Local implementation checkpoint recorded in the internal workspace checkpoint record; no PR or publication. [Validation report](docs/inline-reference-report.md), [quickstart](js/README.md), `js/artifact-input.json` and `js/reports/clean-node{22,24}.json`. Exact SDK 0.1.0-dev.0 tarball SHA-256 `3476778550e9b570bb60d7529faa6c7a63c4fee9d67f0911e879809cdd8f1bd4`, SDK checkpoint `eb0dda05c0bf77d5250184006bb499691f454d3c`, contract `a5c007510faa3fce85190f2e76e402faf0e897ad`, official peer 1.3.0. From `js/` with `SDK_ARTIFACT` set: `npm exec --yes --package=node@22.23.3 -- npm run check:clean` and `npm exec --yes --package=node@24.21.0 -- npm run check:clean` pass fresh reference-only installations, format/lint/strict-types/build, 47 tests including 37 inline scenarios, documented runners and process/artifact negative paths. macOS HTTP/SSE; plain-JS and compiled-TS clients use only public imports. Zero installation audit findings. Manual Linux artifact-consumer CI configured but unrun; no hosted/Windows portability claim. Full release/operational documentation remains REF-004.
 
 ## REF-002: Complete deterministic Node reference scenarios
 
@@ -180,3 +180,11 @@ Evidence: Deferred; waits for complete bundle/XML SDK support.
 | 2026-10-06 | REF-001 readiness | SDK-004/005 complete locally; harness READY. REF-001/002 can be executed as one batch, keeping separate completion evidence | SDK integration report; final tarballs in SDK `js/artifacts/integration-node{22,24}/` |
 
 | 2026-10-06 | REF-001/002 | DONE locally; isolated installed consumers and 37 deterministic inline scenarios pass on Node 22/24 | docs/inline-reference-report.md; js/reports/clean-node{22,24}.json and scenarios-node{22,24}.json; M2 evidence available |
+
+## Public repository availability
+
+The maintainer authorized public GitHub repository creation on 2026-10-06.
+The repository front page, description, discovery topics and contributor/security
+guides distinguish the implemented Node preview from planned Python and release
+work. Original task reports retain their validation-time context. Source hosting
+does not publish an npm/PyPI package or close the remaining release gates.

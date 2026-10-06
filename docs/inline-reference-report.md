@@ -94,10 +94,11 @@ bounded inline profile already defined by SDK-004/005.
 
 ## Remaining scope
 
-SDK-006 is next: policy-controlled HTTPS external catalogs/schema graphs.
-REF-003 waits for SDK-006/007 and will add direct invalid-wire, malformed-peer,
+SDK-006 has since completed in the [SDK repository](https://github.com/shashikanth-gs/a2a-schema-contract-sdk/blob/main/docs/resolver-report.md): policy-controlled HTTPS external catalogs/schema graphs.
+REF-003 waits for SDK-007 and will add direct invalid-wire, malformed-peer,
 invalid-output, cancellation/race and security demonstrations. Hosted Linux and
 Windows checks remain unverified; no Windows portability claim is made. Python,
 external resources, worker isolation, bundle/XML coverage and optional LLM
 construction remain incomplete. No external publication or normative input
-change occurred.
+change occurred during the original inline checkpoint. Public source repository
+hosting was authorized later; package publishing remains disabled.
