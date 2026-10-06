@@ -7,8 +7,8 @@
   "artifact": {
     "packageName": "a2a-schema-contract",
     "version": "0.1.0-rc.1",
-    "sha256": "6bcc8dcc4d48750c5a9c4c7c2014f62774cceea2c28e00e2e988b5dabe664d50",
-    "sdkCommit": "31221c30885ff084cffc5e4c0e5a3cd0dc2c5831",
+    "sha256": "09c0146a2d9d1ba110fd6d888374ce0233f8effc1df77dc42f6a167bd4717677",
+    "sdkCommit": "07ddd60e339ed0d86f2ace091e263a7aa369a0b9",
     "contractCommit": "a5c007510faa3fce85190f2e76e402faf0e897ad",
     "node": "v22.23.3",
     "installation": "npm tarball; no source imports",

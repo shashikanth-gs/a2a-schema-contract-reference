@@ -2,8 +2,8 @@
 
 REF-010 consumes the private `a2a-schema-contract@0.1.0-rc.1` tarball through
 public imports. SDK runtime source is
-`31221c30885ff084cffc5e4c0e5a3cd0dc2c5831`; SHA-256 is
-`6bcc8dcc4d48750c5a9c4c7c2014f62774cceea2c28e00e2e988b5dabe664d50`.
+`07ddd60e339ed0d86f2ace091e263a7aa369a0b9`; SHA-256 is
+`09c0146a2d9d1ba110fd6d888374ce0233f8effc1df77dc42f6a167bd4717677`.
 The normative source remains `a5c007510faa3fce85190f2e76e402faf0e897ad`.
 [artifact-input.json](../js/artifact-input.json) and the npm lock record exact
 version, revision, checksum and dependency integrity.

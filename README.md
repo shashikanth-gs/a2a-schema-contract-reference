@@ -43,7 +43,7 @@ From a directory where you want both checkouts:
 
 ```sh
 git clone https://github.com/shashikanth-gs/a2a-schema-contract-sdk.git
-git -C a2a-schema-contract-sdk checkout --detach 31221c30885ff084cffc5e4c0e5a3cd0dc2c5831
+git -C a2a-schema-contract-sdk checkout --detach 07ddd60e339ed0d86f2ace091e263a7aa369a0b9
 cd a2a-schema-contract-sdk/js
 npm ci
 npm run build
@@ -91,7 +91,7 @@ reference runs independently thereafter.
 
 The pinned artifact version, SHA-256 and SDK revision are in
 [js/artifact-input.json](js/artifact-input.json). This reference checkpoint uses
-SDK commit `31221c30885ff084cffc5e4c0e5a3cd0dc2c5831`, including secure external
+SDK commit `07ddd60e339ed0d86f2ace091e263a7aa369a0b9`, including secure external
 resolution and isolated async schema validation. A new artifact requires reviewed
 pin updates and fresh consumer validation.
 
