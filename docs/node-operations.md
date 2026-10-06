@@ -56,6 +56,13 @@ that test service; the normal service keeps its counters/fault fixtures disabled
 | `REFERENCE_EVIDENCE`    | disabled               | Set `1` only for test harness counters, sanitized diagnostics and intentional fault injection. |
 | `SDK_ARTIFACT`          | required during intake | Exact tarball path; does not affect runtime schema retrieval.                                  |
 
+The external discovery harness additionally sets `REFERENCE_CATALOG_JSON` to its
+trusted fixture catalog, `REFERENCE_RESOLVER_ORIGIN` to the exact controlled
+`https://catalog.test:<port>` origin, and `REFERENCE_CATALOG_URI` to the resource
+advertised by the agent. These settings are accepted only with evidence mode
+enabled. The server prepares the same schema graph that the client discovers;
+they are test fixture inputs, not administrator policy supplied by a remote peer.
+
 The HTTP parser limits request bodies to 256 KiB. SDK staging is bounded to 128
 events and 256 KiB; validation workers default to four concurrent operations and four active business executions,
 2,000 ms per operation and 64 MiB V8 old-generation heap. Resolver preparation has

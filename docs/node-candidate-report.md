@@ -18,7 +18,7 @@ report zero vulnerabilities. Individual reports in `js/reports/` retain runtime,
 artifact identity, requirement IDs and sanitized outcomes; the M2 inline evidence
 is preserved separately under `js/reports/inline-checkpoint/`.
 
-The 41 independently authored security scenarios cover direct invalid wire input
+The 43 independently authored security scenarios cover direct invalid wire input
 with zero business execution, contract/protocol version mismatch, activation and
 negotiation errors, schema/echo/event failures with no successful Artifact escape,
 six dishonest-peer responses, simultaneous valid/invalid requests, explicit task

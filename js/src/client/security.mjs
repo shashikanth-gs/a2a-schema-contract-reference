@@ -198,8 +198,24 @@ export async function runSecurity() {
     }
     const client = await discoverContractClient(url);
     try {
-      for (const fault of ['invalid', 'throw', 'bad-echo', 'late-event', 'stream-invalid']) {
+      for (const fault of [
+        'invalid',
+        'throw',
+        'bad-echo',
+        'late-event',
+        'stream-invalid',
+        'buffer-events',
+        'buffer-bytes',
+      ]) {
         await check('output-' + fault, ['D10-01', 'D12-01'], async () => {
+          if (fault === 'buffer-events' || fault === 'buffer-bytes') {
+            const control = await client.invoke({
+              ...invocation,
+              metadata: { fault, bufferBelow: true },
+            });
+            assert.equal(control.response.status.state, TaskState.TASK_STATE_COMPLETED);
+            assert.deepEqual(control.payload.value, { total: 6, label: null });
+          }
           const events = [];
           for await (const event of client.stream(
             { ...invocation, metadata: { fault } },

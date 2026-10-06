@@ -183,6 +183,22 @@
       "outcome": "PASS"
     },
     {
+      "id": "output-buffer-events",
+      "requirements": [
+        "D10-01",
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "id": "output-buffer-bytes",
+      "requirements": [
+        "D10-01",
+        "D12-01"
+      ],
+      "outcome": "PASS"
+    },
+    {
       "id": "concurrent-request-isolation",
       "requirements": [
         "D09-01",

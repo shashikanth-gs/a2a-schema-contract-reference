@@ -13,7 +13,7 @@ scenarios make the behavior reproducible without a model provider or cloud
 credentials.
 
 **Node release candidate:** the applications cover **37 inline scenarios**
-and **41 independent protocol/security scenarios** against a hash-pinned SDK
+and **43 independent protocol/security scenarios** against a hash-pinned SDK
 artifact. Python applications and cross-language interoperability are planned. Package
 releases are not published. The community specification remains authoritative:
 [A2A Schema Contract](https://github.com/shashikanth-gs/a2a-schema-contract).

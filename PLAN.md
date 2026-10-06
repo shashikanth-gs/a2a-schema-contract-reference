@@ -1,8 +1,8 @@
 # Reference implementation delivery plan
 
 Updated: 2026-10-06  
-Status: REF-001/002 complete locally; Node inline artifact-consumer evidence available
-Next task: REF-003 after SDK-007; SDK-006 is complete and workspace next task is SDK-007
+Status: REF-003/004 local candidate gates pass; hosted installed consumers in progress
+Next gate: final hosted Linux/macOS/Windows consumer acceptance
 Companion tracking: [SDK roadmap](https://github.com/shashikanth-gs/a2a-schema-contract-sdk/blob/main/PLAN.md). Workspace milestone tracking is maintained internally.
 
 This repository demonstrates how real clients and agents use the reusable packages. It is an independent consumer and interoperability check, not a second implementation of SDK internals. The initial specification revision is pinned in [contract-source.json](contract-source.json).
@@ -95,7 +95,7 @@ Acceptance criteria:
 - Store reports referencing artifact hashes, source revisions and profile requirements. No undocumented manual source edits should be necessary to reproduce the validation.
 - Provide the independent Node acceptance evidence consumed by SDK-008 and root milestone M3. Unimplemented profile requirements remain visible rather than being renamed as successful demonstrations.
 
-Evidence: Not started.
+Evidence: Started 2026-10-06 by Codex. [Candidate report](docs/node-candidate-report.md), [operations guide](docs/node-operations.md), [verified quickstart](js/README.md), exact source/artifact pin and paired Node 22/24 reports. Fresh local consumers pass 48 tests without skips, 37 inline and 43 security scenarios; hosted portability acceptance remains open.
 
 ## REF-005: Complete Python reference applications
 

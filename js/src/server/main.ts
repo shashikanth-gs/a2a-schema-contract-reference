@@ -151,6 +151,57 @@ const adapter = createContractServer({
         return;
       }
       if (evidenceEnabled && typeof settings.fault === 'string') {
+        if (settings.fault === 'buffer-events' || settings.fault === 'buffer-bytes') {
+          bus.publish(
+            AgentEvent.task(
+              Task.fromJSON({
+                id: context.taskId,
+                contextId: context.contextId,
+                status: { state: 'TASK_STATE_WORKING' },
+              }),
+            ),
+          );
+          const count =
+            settings.bufferBelow === true ? 2 : settings.fault === 'buffer-events' ? 129 : 40;
+          for (let index = 0; index < count; index++)
+            bus.publish(
+              AgentEvent.statusUpdate(
+                TaskStatusUpdateEvent.fromJSON({
+                  taskId: context.taskId,
+                  contextId: context.contextId,
+                  status: {
+                    state: 'TASK_STATE_WORKING',
+                    message: {
+                      messageId: 'buffer-' + index,
+                      role: 'ROLE_AGENT',
+                      parts: [{ text: settings.fault === 'buffer-bytes' ? 'x'.repeat(8192) : 'x' }],
+                    },
+                  },
+                }),
+              ),
+            );
+          // Without the staging limit this otherwise valid sequence would succeed.
+          bus.publish(
+            AgentEvent.artifactUpdate(
+              TaskArtifactUpdateEvent.fromJSON({
+                taskId: context.taskId,
+                contextId: context.contextId,
+                artifact: Artifact.toJSON(outputArtifact(execution, { total: 6, label: null })),
+                lastChunk: true,
+              }),
+            ),
+          );
+          bus.publish(
+            AgentEvent.statusUpdate(
+              TaskStatusUpdateEvent.fromJSON({
+                taskId: context.taskId,
+                contextId: context.contextId,
+                status: { state: 'TASK_STATE_COMPLETED' },
+              }),
+            ),
+          );
+          return;
+        }
         const raw = {
           artifactId: 'result',
           parts: [
