@@ -50,6 +50,7 @@ npm pack --ignore-scripts --pack-destination artifacts
 cd ../..
 export SDK_ARTIFACT="$PWD/a2a-schema-contract-sdk/js/artifacts/a2a-schema-contract-0.1.0-rc.0.tgz"
 git clone https://github.com/shashikanth-gs/a2a-schema-contract-reference.git
+git -C a2a-schema-contract-reference checkout codex/m3-node-release-candidate
 cd a2a-schema-contract-reference/js
 npm run artifact:install
 npm run scenarios
@@ -76,6 +77,8 @@ reference runs independently thereafter.
 | [Node quickstart](js/README.md) | Artifact intake, agent/client commands and local execution |
 | [Wire-flow tutorial](docs/inline-tutorial.md) | Discovery, schema construction, activation, validation and scenario behavior |
 | [Inline checkpoint report](docs/inline-reference-report.md) | Exact artifact/revision pins, test evidence and supported limits |
+| [Candidate validation](docs/node-candidate-report.md) | Source/checksum pins, independent security scenarios and actual hosted matrix |
+| [Operations guide](docs/node-operations.md) | Readiness, shutdown, limits, authentication/context ownership and troubleshooting |
 | [Scenario manifest](fixtures/scenarios.json) | Independent expected outcomes for the 37 scenarios |
 | [SDK implementation](https://github.com/shashikanth-gs/a2a-schema-contract-sdk) | Reusable core, client/server adapters and HTTPS resolver |
 | [Community specification](https://github.com/shashikanth-gs/a2a-schema-contract) | Normative draft and extension schemas |

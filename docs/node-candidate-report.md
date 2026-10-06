@@ -1,6 +1,6 @@
 # Node release candidate consumer validation
 
-Status: local candidate validation passes; final hosted portability acceptance is pending. REF-003/004 remain open until those gates pass.
+Status: PASS. REF-003/004 complete for the selected Node first-release profile.
 
 The reference consumes `a2a-schema-contract@0.1.0-rc.0` from SDK source checkpoint
 `7481b002f55a0961ea4ee21e36da446f2a3b9ea8`, pinned normative contract revision
@@ -21,7 +21,8 @@ is preserved separately under `js/reports/inline-checkpoint/`.
 The 43 independently authored security scenarios cover direct invalid wire input
 with zero business execution, contract/protocol version mismatch, activation and
 negotiation errors, schema/echo/event failures with no successful Artifact escape,
-six dishonest-peer responses, simultaneous valid/invalid requests, explicit task
+six dishonest-peer responses, event-count/byte buffer overflow with valid
+below-limit controls, simultaneous valid/invalid requests, explicit task
 cancellation, disconnect/deadline cleanup and diagnostic redaction. A valid
 exponential schema times out in an installed SDK worker while the application
 event loop remains responsive; worker termination is awaited and `active` is zero.
@@ -44,8 +45,14 @@ environment setting `REFERENCE_EVIDENCE=1`.
 
 The candidate workflow builds the exact SDK pin, then installs the hash-verified
 tarball in a temporary reference-only copy. Its declared matrix is Linux Node
-22/24 and macOS/Windows Node 24. Actual run links and source acceptance will be
-recorded after completion. The [operations guide](node-operations.md) documents
+22/24 and macOS/Windows Node 24.
+[The accepted run](https://github.com/shashikanth-gs/a2a-schema-contract-reference/actions/runs/37510461774)
+passes all four jobs at reference source
+`0a428afdf81bfee952d351763507db598f3512b5`, including all 43 security scenarios.
+Downloaded job reports confirm the same SDK revision and artifact hash on every
+platform; `js/reports/node-candidate-summary.json` retains the rollup and links.
+The [draft PR](https://github.com/shashikanth-gs/a2a-schema-contract-reference/pull/1)
+contains the reviewable change. The [operations guide](node-operations.md) documents
 commands, readiness, shutdown, limits, credentials and failure diagnosis.
 
 Python, four-pairing interoperability, bundles/XML, other bindings, unrestricted

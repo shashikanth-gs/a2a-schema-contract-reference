@@ -96,16 +96,18 @@ require no external credentials, containers, cloud services or LLM providers.
 
 ## Troubleshooting
 
-| Symptom                                 | Check                                                                                                                        |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Tarball checksum/version mismatch       | Rebuild the exact accepted SDK revision and use the configured candidate; update pins only with reviewed consumer evidence.  |
-| A2A version refusal                     | Raw requests must send `A2A-Version: 1.0`, the extension activation header and JSON-RPC method casing.                       |
-| Required extension refusal              | Activate the advertised extension; optional baseline requests carry no contract metadata.                                    |
-| Input refusal with no executions        | Check the discovered contract ID, representation, primary metadata, presence and schema; coercion is intentionally disabled. |
-| Failed Task without successful Artifact | Correct output, echo or event grammar. The stream may contain a safe initial WORKING Task, then failure.                     |
-| Validation timeout/resource limit       | Review schema work, configured concurrency and limits; every failed worker is terminated.                                    |
-| Resolver policy/integrity error         | Review exact administrator origins, pins and transitive resources; do not trust policy from the peer's metadata.             |
-| Hanging service/process                 | Cooperate with execution signals, close iterators and clients, call server `close()`, then drain the HTTP host.              |
+| Symptom                                 | Check                                                                                                                                       |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tarball checksum/version mismatch       | Rebuild the exact accepted SDK revision and use the configured candidate; update pins only with reviewed consumer evidence.                 |
+| A2A version refusal                     | Raw requests must send `A2A-Version: 1.0`, the extension activation header and JSON-RPC method casing.                                      |
+| Required extension refusal              | Activate the advertised extension; optional baseline requests carry no contract metadata.                                                   |
+| Unknown contract/version/representation | Compare exact advertised IDs and versioned contract identity; do not relabel a request or fall back to another version.                     |
+| Input refusal with no executions        | Check the discovered contract ID, representation, primary metadata, presence and schema; coercion is intentionally disabled.                |
+| Failed Task without successful Artifact | Correct output, echo or event grammar. The stream may contain a safe initial WORKING Task, then failure.                                    |
+| Client refuses a peer result            | Check primary cardinality/carrier, schema and result echo against the selected contract; the dishonest-peer cases show independent refusal. |
+| Validation timeout/resource limit       | Review schema work, configured concurrency and limits; every failed worker is terminated.                                                   |
+| Resolver policy/integrity error         | Review exact administrator origins, pins and transitive resources; do not trust policy from the peer's metadata.                            |
+| Hanging service/process                 | Cooperate with execution signals, close iterators and clients, call server `close()`, then drain the HTTP host.                             |
 
 No automatic retry of a side-effecting invocation occurs. Client disconnect does
 not imply `CancelTask`; explicit cancellation is a separate protocol operation.

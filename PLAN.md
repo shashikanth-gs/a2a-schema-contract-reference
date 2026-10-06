@@ -1,8 +1,8 @@
 # Reference implementation delivery plan
 
 Updated: 2026-10-06  
-Status: REF-003/004 local candidate gates pass; hosted installed consumers in progress
-Next gate: final hosted Linux/macOS/Windows consumer acceptance
+Status: REF-001–004 complete; independent Node candidate acceptance available
+Next gate: Python SDK implementation (SDK-009–011), then REF-005
 Companion tracking: [SDK roadmap](https://github.com/shashikanth-gs/a2a-schema-contract-sdk/blob/main/PLAN.md). Workspace milestone tracking is maintained internally.
 
 This repository demonstrates how real clients and agents use the reusable packages. It is an independent consumer and interoperability check, not a second implementation of SDK internals. The initial specification revision is pinned in [contract-source.json](contract-source.json).
@@ -15,8 +15,8 @@ This table owns REF-* statuses. SDK-* dependencies are tracked in the SDK reposi
 |---|---|---|---|---|
 | REF-001 | Reproducible Node package-consumer harness | DONE | Codex | SDK-002, SDK-004 |
 | REF-002 | Complete deterministic Node reference scenarios | DONE | Codex | REF-001, SDK-005 |
-| REF-003 | Node protocol, failure and security demonstrations | IN_PROGRESS | Codex | REF-002, SDK-006, SDK-007 |
-| REF-004 | Node developer/operations guide and validation report | IN_PROGRESS | Codex | REF-003 |
+| REF-003 | Node protocol, failure and security demonstrations | DONE | Codex | REF-002, SDK-006, SDK-007 |
+| REF-004 | Node developer/operations guide and validation report | DONE | Codex | REF-003 |
 | REF-005 | Complete Python reference applications | PLANNED | Unassigned | REF-004, SDK-010, SDK-011 |
 | REF-006 | Four-pairing interoperability and parity suite | PLANNED | Unassigned | REF-005, SDK-007, SDK-011 |
 | REF-007 | Schema-driven generation demonstration | DEFERRED | Unassigned | REF-002, SDK-005 |
@@ -80,7 +80,7 @@ Acceptance criteria:
 - Validate cancellation, timeout, shutdown, concurrent-request separation, secret/error redaction and no leaked child processes/sockets.
 - Produce structured, sanitized scenario reports and explain how to diagnose each failure. SDK fixes belong in the SDK repository; reference code must not work around a broken library.
 
-Evidence: Started 2026-10-06 by Codex on `codex/m3-node-release-candidate`; operational isolation and independent installed-artifact security validation in progress. Completion gates remain open.
+Evidence: Started/completed 2026-10-06 by Codex on `codex/m3-node-release-candidate`; accepted reference source `0a428afdf81bfee952d351763507db598f3512b5`, [draft PR #1](https://github.com/shashikanth-gs/a2a-schema-contract-reference/pull/1). [Accepted hosted matrix](https://github.com/shashikanth-gs/a2a-schema-contract-reference/actions/runs/37510461774) passes Linux Node 22.23.3/24.21.0 and macOS/Windows Node 24.21.0. Fresh local `npm run check:clean` on both runtimes passes 48 tests without skips, 37 inline and 43 independently authored security scenarios, zero installation audits and full/single documented runners. Exact private SDK `a2a-schema-contract@0.1.0-rc.0`, SDK source `7481b002f55a0961ea4ee21e36da446f2a3b9ea8`, normative source `a5c007510faa3fce85190f2e76e402faf0e897ad` and tarball SHA-256 `0f29b101df8af091fc2337cdc5eda6f0e7a234cdd18ac9330bf19d65f270c60e`. [Candidate report](docs/node-candidate-report.md), `js/reports/node-candidate-summary.json` and paired `security-node{22,24}.json` retain source/hash/requirements/outcomes. Direct invalid wire input causes zero execution; output schema/echo/terminal failures and count/byte overflow with valid controls publish no successful Artifact; dishonest peers, protocol/domain versions, optional activation, concurrency, cancel/disconnect/deadline, redaction and owned child/worker cleanup are checked. Real externally advertised HTTPS catalog round-trip and server refusal use the same prepared contract; pins/cache/address/redirect/integrity/unavailable/budget cases use explicit trusted loopback fixture policy. No SDK internals, normative edits or publication; Python, broader transports/dialects and bundles/XML remain excluded.
 
 ## REF-004: Node developer/operations guide and validation report
 
@@ -95,7 +95,7 @@ Acceptance criteria:
 - Store reports referencing artifact hashes, source revisions and profile requirements. No undocumented manual source edits should be necessary to reproduce the validation.
 - Provide the independent Node acceptance evidence consumed by SDK-008 and root milestone M3. Unimplemented profile requirements remain visible rather than being renamed as successful demonstrations.
 
-Evidence: Started 2026-10-06 by Codex. [Candidate report](docs/node-candidate-report.md), [operations guide](docs/node-operations.md), [verified quickstart](js/README.md), exact source/artifact pin and paired Node 22/24 reports. Fresh local consumers pass 48 tests without skips, 37 inline and 43 security scenarios; hosted portability acceptance remains open.
+Evidence: Started/completed 2026-10-06 by Codex; same accepted source/artifact/runtime/hosted gates as REF-003. [Candidate report](docs/node-candidate-report.md), [operations guide](docs/node-operations.md), [verified quickstart](js/README.md), flow/scenario tutorial, exact `js/artifact-input.json` pin and machine reports. Readiness, hosts/ports, graceful shutdown and forced cleanup, body/staging/worker/resolver limits, diagnostics, exact administrator resolver policy, credential/context ownership and failure troubleshooting are documented. Independent plain-JS and compiled-TS consumers, public types/resources, full/single runners and source-to-artifact CI pass with no manual runtime source edits; 48 tests, 37 inline and 43 security scenarios, no skips. SDK-008/M3 consume this evidence; registry ownership/provenance/publication, Python parity and wider scope remain separate gates.
 
 ## REF-005: Complete Python reference applications
 
