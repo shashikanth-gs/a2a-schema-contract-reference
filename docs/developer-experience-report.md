@@ -35,8 +35,11 @@ and HTTPS fixture ownership is closed on success and failure.
 
 Reports: `js/reports/clean-node{22,24}.json`,
 `discovery-node{22,24}.json`, `scenarios-node{22,24}.json` and
-`security-node{22,24}.json`. The hosted current-candidate matrix is pending
-this implementation checkpoint. Old RC0 reports remain historical evidence.
+`security-node{22,24}.json`. The [current-candidate hosted matrix](https://github.com/shashikanth-gs/a2a-schema-contract-reference/actions/runs/37526845838)
+passes Linux Node 22/24 and macOS/Windows Node 24 at reference runtime source
+`6c662a312183b5dd189bf941caf86223f1415644`. Each job rebuilds the exact SDK pin,
+verifies its hash, and runs the fresh reference-only consumer gate. REF-010 and
+workspace M3a are complete. Old RC0 reports remain historical evidence.
 
 [The tutorial](discovery-tutorial.md) contains the verified command and application
 recipe. These deterministic local examples do not call a flight service or model.
