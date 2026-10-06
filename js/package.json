@@ -1,0 +1,8 @@
+{
+  "name": "@shashikanth-gs/a2a-schema-contract-reference",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Scaffold for Node clients and agents consuming the Schema Contract SDK",
+  "type": "module",
+  "license": "Apache-2.0"
+}
